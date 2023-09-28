@@ -1,1 +1,0 @@
-value_secret_key = 'django-insecure-f8y!82v68di#6z&7gu)!j36(re3))^uk%99n4hjqo6m@x5r^c^'
