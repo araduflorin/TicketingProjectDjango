@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import TextInput
 
-from aplicatieTicketing.models import Registration
+from aplicatieTicketing.models import Registration, Contact
 
 
 class RegistrationClass(forms.ModelForm):
@@ -18,5 +18,18 @@ class RegistrationClass(forms.ModelForm):
         'password': TextInput(attrs={'placeholder': "Password", 'class': 'form-control'}),
         'confirm_password': TextInput(attrs={'placeholder': "Confirm password", 'class': 'form-control'}),
         'email': TextInput(attrs={'placeholder': "E-mail", 'class': 'form-control'}),
-        'telephone': TextInput(attrs={'placeholder': "E-mail", 'class': 'form-control'}),
+        'telephone': TextInput(attrs={'placeholder': "Telephone", 'class': 'form-control'}),
+    }
+
+class ContactClass(forms.ModelForm):
+
+    class Meta:
+        model = Contact
+        fields = ['name', 'email', 'telephone','message']
+
+    widgets = {
+        'name': TextInput(attrs={'placeholder': "Name", 'class': 'form-control'}),
+        'email': TextInput(attrs={'placeholder': "E-mail", 'class': 'form-control'}),
+        'telephone': TextInput(attrs={'placeholder': "Telephone", 'class': 'form-control'}),
+        'message': TextInput(attrs={'placeholder': "Message", 'class': 'form-control'}),
     }

@@ -4,8 +4,8 @@ from django.template import loader
 from django.urls import reverse
 from django.views.generic import CreateView
 
-from aplicatieTicketing.forms import RegistrationClass
-from aplicatieTicketing.models import Registration
+from aplicatieTicketing.forms import RegistrationClass, ContactClass
+from aplicatieTicketing.models import Registration, Contact
 
 
 # Create your views here.
@@ -21,6 +21,10 @@ class CreateRegistrationView(CreateView):
     def get_success_url(self):
         return reverse('aplicatieTicketing:general')
 
+class CreateContactView(CreateView):
+    model = Contact
+    form_class = ContactClass
+    template_name = 'aplicatieTicketing/contact_form.html'
 
 def general(request):
   template_name = loader.get_template('aplicatieTicketing/general_index.html')
