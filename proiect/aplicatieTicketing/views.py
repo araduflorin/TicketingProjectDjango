@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import loader
@@ -28,4 +30,9 @@ class CreateContactView(CreateView):
 
 def general(request):
   template_name = loader.get_template('aplicatieTicketing/general_index.html')
+  return HttpResponse(template_name.render())
+
+@login_required
+def user(request):
+  template_name = loader.get_template('aplicatieTicketing/user_form.html')
   return HttpResponse(template_name.render())
