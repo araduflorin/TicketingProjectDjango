@@ -6,8 +6,8 @@ from django.template import loader
 from django.urls import reverse
 from django.views.generic import CreateView
 
-from aplicatieTicketing.forms import RegistrationClass, ContactClass
-from aplicatieTicketing.models import Registration, Contact
+from aplicatieTicketing.forms import RegistrationClass, ContactClass, TicketClass
+from aplicatieTicketing.models import Registration, Contact, Ticket
 
 
 # Create your views here.
@@ -36,3 +36,13 @@ def general(request):
 def user(request):
   template_name = loader.get_template('aplicatieTicketing/user_form.html')
   return HttpResponse(template_name.render())
+
+
+class CreateTicket(CreateView):
+    model = Ticket
+    form_class = TicketClass
+    template_name = 'aplicatieTicketing/ticket_form.html'
+
+    def general(request):
+        template_name = loader.get_template('aplicatieTicketing/general_index.html')
+        return HttpResponse(template_name.render())

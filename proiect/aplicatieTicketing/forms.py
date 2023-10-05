@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import TextInput
 
-from aplicatieTicketing.models import Registration, Contact
+from aplicatieTicketing.models import Registration, Contact, Ticket
 
 
 class RegistrationClass(forms.ModelForm):
@@ -32,4 +32,20 @@ class ContactClass(forms.ModelForm):
         'email': TextInput(attrs={'placeholder': "E-mail", 'class': 'form-control'}),
         'telephone': TextInput(attrs={'placeholder': "Telephone", 'class': 'form-control'}),
         'message': TextInput(attrs={'placeholder': "Message", 'class': 'form-control'}),
+    }
+
+
+class TicketClass(forms.ModelForm):
+    class Meta:
+        model = Ticket
+        fields = ['subject_ticket', 'status', 'type', 'name',
+                  'email', 'telephone']
+
+    widgets = {
+        'subject_ticket': TextInput(attrs={'placeholder': "Subject ticket", 'class': 'form-control'}),
+        'status': TextInput(attrs={'placeholder': "Status", 'class': 'form-control'}),
+        'type': TextInput(attrs={'placeholder': "Type", 'class': 'form-control'}),
+        'name': TextInput(attrs={'placeholder': "Name", 'class': 'form-control'}),
+        'email': TextInput(attrs={'placeholder': "E-mail", 'class': 'form-control'}),
+        'telephone': TextInput(attrs={'placeholder': "Telephone", 'class': 'form-control'}),
     }

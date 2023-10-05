@@ -12,5 +12,6 @@ urlpatterns = [
     path('login/', LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('contact/', views.CreateContactView.as_view(), name='contact'),
     path('user/', views.user, name='user'),
+    path('ticket/', views.CreateTicket.as_view(), name='ticket'),
 
 ]

@@ -30,3 +30,17 @@ class Contact(models.Model):
 
     def __str__(self):
         return f"{self.name}{self.email}{self.telephone}{self.message}"
+
+
+class Ticket(models.Model):
+
+    subject_ticket = models.CharField(max_length=30)
+    status = models.CharField(max_length=15)
+    type = models.CharField(max_length=15)
+    name = models.CharField(max_length=50)
+    email = models.EmailField(max_length=40)
+    telephone = PhoneField(blank=True, help_text='Phone number')
+
+
+    def __str__(self):
+        return f"{self.subject_ticket}{self.status}{self.type}{self.name}{self.email}{self.telephone}"
