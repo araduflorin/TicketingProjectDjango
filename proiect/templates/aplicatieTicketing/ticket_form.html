@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Index</th>
+            <th>Subiect</th>
+            <th>Stare</th>
+            <th>Tip</th>
+            <th>Nume</th>
+            <th>E-mail</th>
+            <th>Telefon</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for item in ticket_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ item.subject_ticket }}</td>
+                    <td>{{ item.status }}</td>
+                    <td>{{ item.type }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.email }}</td>
+                    <td>{{ item.telephone }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
