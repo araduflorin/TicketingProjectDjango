@@ -13,5 +13,6 @@ urlpatterns = [
     path('contact/', views.CreateContactView.as_view(), name='contact'),
     path('user/', views.user, name='user'),
     path('ticket/', views.CreateTicket.as_view(), name='ticket'),
+    path('type/', views.CreateTicketType.as_view(), name='addTicketType'),
 
 ]
