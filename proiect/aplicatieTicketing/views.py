@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import loader
 from django.urls import reverse
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 
 from aplicatieTicketing.forms import RegistrationClass, ContactClass, TicketClass, TicketTypeClass
 from aplicatieTicketing.models import Registration, Contact, Ticket, TicketType
@@ -52,7 +52,15 @@ class CreateTicketType(CreateView):
     model = TicketType
     form_class = TicketTypeClass
     template_name = 'aplicatieTicketing/ticket_type_form.html'
+    context_object_name = 'type_ticket'
 
-    def general(request):
-        template_name = loader.get_template('aplicatieTicketing:addTicketType')
-        return HttpResponse(template_name.render())
+    def get_success_url(self):
+        return reverse('aplicatieTicketing:list_type_ticket')
+
+
+class TicketTypeView(ListView):
+    model = TicketType
+    form_class = TicketTypeClass
+    template_name = 'aplicatieTicketing/ticket_type_index.html'
+    context_object_name = 'type_ticket'
+

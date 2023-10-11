@@ -13,6 +13,7 @@ urlpatterns = [
     path('contact/', views.CreateContactView.as_view(), name='contact'),
     path('user/', views.user, name='user'),
     path('ticket/', views.CreateTicket.as_view(), name='ticket'),
-    path('type/', views.CreateTicketType.as_view(), name='addTicketType'),
+    path('type/', views.CreateTicketType.as_view(), name='add_type_ticket'),
+    path('type_view/', views.TicketTypeView.as_view(), name='list_type_ticket'),
 
 ]
