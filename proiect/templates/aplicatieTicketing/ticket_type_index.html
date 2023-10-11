@@ -1,0 +1,29 @@
+{% extends 'base_user.html' %}
+
+{% block content %}
+<a class="btn btn-primary" href="{% url 'aplicatieTicketing:add_type_ticket' %}">Adaugare tip tichet</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Index</th>
+            <th>Tip tichet</th>
+            <th>Descriere tip tichet</th>
+            <th>Actiuni</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for item in type_ticket %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ item.type_name }}</td>
+                    <td>{{ item.type_description }}</td>
+                    <td>
+                        <a class="btn btn-success" href="#">Editare</a>
+                        <a class="btn btn-danger" href="#">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
