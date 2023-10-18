@@ -6,13 +6,13 @@ from django.template import loader
 from django.urls import reverse
 from django.views.generic import CreateView, ListView
 
-<<<<<<< HEAD
+
 from aplicatieTicketing.forms import RegistrationClass, ContactClass, TicketClass, TypeTicket, StatusTicket
 from aplicatieTicketing.models import Registration, Contact, Ticket, Type, Status
-=======
+
 from aplicatieTicketing.forms import RegistrationClass, ContactClass, TicketClass, TicketTypeClass
 from aplicatieTicketing.models import Registration, Contact, Ticket, TicketType
->>>>>>> e33ddd27c2f6f2a3ade2f2778ea6074729e0853a
+
 
 
 # Create your views here.
@@ -55,7 +55,7 @@ class CreateTicket(LoginRequiredMixin, CreateView):
     form_class = TicketClass
     template_name = 'aplicatieTicketing/ticket_form.html'
 
-<<<<<<< HEAD
+
     def form_valid(self, form):
         if form.is_valid():
             ticket_instance = form.save(commit=False)
@@ -107,7 +107,7 @@ class CreateStatusTicket(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse('aplicatieTicketing:ticket_list')
-=======
+
     def general(request):
         template_name = loader.get_template('aplicatieTicketing/general_index.html')
         return HttpResponse(template_name.render())
@@ -129,4 +129,4 @@ class TicketTypeView(ListView):
     template_name = 'aplicatieTicketing/ticket_type_index.html'
     context_object_name = 'type_ticket'
 
->>>>>>> e33ddd27c2f6f2a3ade2f2778ea6074729e0853a
+
