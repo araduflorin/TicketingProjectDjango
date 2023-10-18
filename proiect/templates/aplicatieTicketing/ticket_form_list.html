@@ -1,0 +1,49 @@
+{% extends 'base_user.html' %}
+{% block content %}
+<div class="container">
+
+        <div class="col-md-12">
+            <a class="btn btn-primary" style="margin-top: 110px; " href="{% url 'aplicatieTicketing:ticket' %}">Adaugare tichet</a>
+              <div class="p text-left bg-light" style="margin-top: 10px; ">
+
+                <div class="shadow p-4 mb-5 bg-body rounded" style="margin-top: 10px;">
+
+                    <table class="table" style="margin-top: 10px;">
+                        <thead>
+                        <tr>
+                            <th>Index</th>
+                            <th>Subiect tichet</th>
+                            <th>Stare</th>
+                            <th>Tip tichet</th>
+                            <th>Nume utilizator</th>
+                            <th>Email</th>
+                            <th>Telefon</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in all_ticket %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ item.subject_ticket }}</td>
+                                    <td>{{ item.status }}</td>
+                                    <td>{{ item.type }}</td>
+                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.email }}</td>
+                                    <td>{{ item.telephone }}</td>
+                <!--                    <td>{% if item.active is True %}-->
+                <!--                            Activ-->
+                <!--                        {% else %}-->
+                <!--                            Dezactivat-->
+                <!--                        {% endif %}-->
+                <!--                    </td>-->
+
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %}
+
