@@ -1,7 +1,11 @@
 from django import forms
 from django.forms import TextInput, CharField, PasswordInput
 
+<<<<<<< HEAD
 from aplicatieTicketing.models import Registration, Contact, Ticket, Status, Type
+=======
+from aplicatieTicketing.models import Registration, Contact, Ticket, TicketType
+>>>>>>> e33ddd27c2f6f2a3ade2f2778ea6074729e0853a
 
 
 class RegistrationClass(forms.ModelForm):
@@ -59,6 +63,7 @@ class TicketClass(forms.ModelForm):
         'name': TextInput(attrs={'placeholder': "Name", 'class': 'form-control'}),
         'email': TextInput(attrs={'placeholder': "E-mail", 'class': 'form-control'}),
         'telephone': TextInput(attrs={'placeholder': "Telephone", 'class': 'form-control'}),
+<<<<<<< HEAD
 
     }
 
@@ -100,3 +105,17 @@ class TypeTicket(forms.ModelForm):
 #         'email': TextInput(attrs={'placeholder': "Name", 'class': 'form-control'}),
 #         'telephone': TextInput(attrs={'placeholder': "Telephone", 'class': 'form-control'}),
 #     }
+=======
+    }
+
+
+class TicketTypeClass(forms.ModelForm):
+    class Meta:
+        model = TicketType
+        fields = ['type_name', 'type_description']
+
+    widgets = {
+        'type_name': TextInput(attrs={'placeholder': "Type ticket", 'class': 'form-control'}),
+        'type_description': TextInput(attrs={'placeholder': "Description", 'class': 'form-control'}),
+    }
+>>>>>>> e33ddd27c2f6f2a3ade2f2778ea6074729e0853a

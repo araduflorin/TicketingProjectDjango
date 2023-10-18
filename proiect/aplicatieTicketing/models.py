@@ -41,6 +41,7 @@ class Ticket(models.Model):
     def __str__(self):
         return f"{self.subject_ticket}{self.status}{self.type}{self.name}{self.email}{self.telephone}"
 
+<<<<<<< HEAD
 
 class Status(models.Model):
     name = models.CharField(max_length=50)
@@ -55,3 +56,12 @@ class Type(models.Model):
 
     def __str__(self):
         return f"{self.name}{self.description}"
+=======
+class TicketType(models.Model):
+
+    type_name = models.CharField(max_length=30)
+    type_description = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.type_name}{self.type_description}"
+>>>>>>> e33ddd27c2f6f2a3ade2f2778ea6074729e0853a
