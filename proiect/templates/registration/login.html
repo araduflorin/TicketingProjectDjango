@@ -2,22 +2,24 @@
 {% block content %}
 <div class="container">
         <div class="col-md-12">
-            <div class="p-5 text-left bg-light" style="margin-top: 10px;">
-            <form method="POST">
-            {% csrf_token %}
-                <div class="col-4">
-                    <label>Username</label>
-                    <input class="form-control" name="username" type="text">
+            <div class="p text-left bg-light" style="margin-top: 10px;">
+                <div class="shadow p-4 mb-5 bg-body rounded">
+                    <form method="POST">
+                    {% csrf_token %}
+                        <div class="col-4">
+                            <label>Username</label>
+                            <input class="form-control" name="username" type="text">
 
-                    <label>Password</label>
-                    <input class="form-control" name="password" type="password">
-                    <br>
+                            <label>Password</label>
+                            <input class="form-control" name="password" type="password">
+                            <br>
 
-                    <button type="submit" class="btn btn-info">Login</button>
-                    <span>{{ form.non_field_errors }}</span>
-                    <br>
+                            <button type="submit" class="btn btn-info">Login</button>
+                            <span>{{ form.non_field_errors }}</span>
+                            <br>
+                        </div>
+                    </form>
                 </div>
-            </form>
             </div>
         </div>
 </div>

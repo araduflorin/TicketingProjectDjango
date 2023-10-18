@@ -11,7 +11,12 @@ urlpatterns = [
     path('', include('django.contrib.auth.urls'), {'next_page': '/'}, name='generalHtml'),
     path('login/', LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('contact/', views.CreateContactView.as_view(), name='contact'),
-    path('user/', views.user, name='user'),
+    # path('user_list/', views.all_users, name='lista_utilizatori'),
+    path('user_list/', views.ListofUsersList.as_view(), name='lista_utilizatori'),
     path('ticket/', views.CreateTicket.as_view(), name='ticket'),
+    path('ticket_list/', views.ViewTicket.as_view(), name='ticket_list'),
+    path('type_ticket.html/', views.CreateTypeTicket.as_view(), name='type_ticket.html'),
+    path('status_ticket/', views.CreateStatusTicket.as_view(), name='status_ticket'),
+
 
 ]

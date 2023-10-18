@@ -1,4 +1,43 @@
 {% extends 'base_user.html' %}
-{% block content %}
 
+{% block content %}
+<div class="container">
+    <div class="col-md-12">
+        <div class="p text-left bg-light" style="margin-top: 10px; ">
+            <div class="shadow p-4 mb-5 bg-body rounded" style="margin-top: 80px;">
+                <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Index</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>ID name</th>
+                            <th>E-mail</th>
+                            <th>Phone</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in users %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ item.first_name }}</td>
+                                    <td>{{ item.last_name }}</td>
+                                    <td>{{ item.id_user }}</td>
+                                    <td>{{ item.email }}</td>
+                                    <td>{{ item.telephone }}</td>
+                <!--                    <td>{% if item.active is True %}-->
+                <!--                            Activ-->
+                <!--                        {% else %}-->
+                <!--                            Dezactivat-->
+                <!--                        {% endif %}-->
+                <!--                    </td>-->
+
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

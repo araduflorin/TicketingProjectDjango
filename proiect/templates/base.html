@@ -1,25 +1,28 @@
 <html lang="en">
 <head>
     <title>Platforma de management a serviciilor IT</title>
-    <div class="p-5 text-center bg-light" style="margin-top: 10px;">
+    <div class="p-3 text-center bg-light" style="margin-top: 10px;">
         <h3 class="mb-3"> Platforma de management a serviciilor IT</h3>
     </div>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container" style="margin-top: 10px;>
-    <div class="row">
-        <div class="col-md-12">
-            <nav class="navbar navbar-expand-lg bg-light">
-                <a class="btn" href="{% url 'aplicatieTicketing:generalHtml' %}">Acasa</a>
-                <a class="btn" href="{% url 'aplicatieTicketing:adaugare' %}">Inregistrare</a>
-                <a class="btn" href="{% url 'aplicatieTicketing:login' %}">Login</a>
-                <a class="btn" href="{% url 'aplicatieTicketing:contact' %}">Contact</a>
-            </nav>
-        </div>
-    </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar navbar-expand-lg bg-light">
+                        <a class="btn" href="{% url 'aplicatieTicketing:generalHtml' %}">Acasa</a>
+                        <a class="btn" href="{% url 'aplicatieTicketing:adaugare' %}">Inregistrare</a>
+                        <a class="btn" href="{% url 'aplicatieTicketing:login' %}">Login</a>
+                        <a class="btn" href="{% url 'aplicatieTicketing:contact' %}">Contact</a>
+                    </nav>
+                </div>
+            </div>
 </div>
+
+
 {% block content %}
 {% endblock %}
+
 </body>
 </html>
