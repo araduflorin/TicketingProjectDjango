@@ -1,10 +1,11 @@
 from django import forms
+from django.contrib.auth.models import User
 from django.forms import TextInput, CharField, PasswordInput
 
 
-from aplicatieTicketing.models import Registration, Contact, Ticket, Status, Type
+from aplicatieTicketing.models import Contact, Ticket, Status, Type, Registration
 
-from aplicatieTicketing.models import Registration, Contact, Ticket, TicketType
+from aplicatieTicketing.models import Contact, Ticket, TicketType
 
 
 

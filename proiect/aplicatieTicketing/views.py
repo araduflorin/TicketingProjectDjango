@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import loader
@@ -8,10 +9,10 @@ from django.views.generic import CreateView, ListView
 
 
 from aplicatieTicketing.forms import RegistrationClass, ContactClass, TicketClass, TypeTicket, StatusTicket
-from aplicatieTicketing.models import Registration, Contact, Ticket, Type, Status
+from aplicatieTicketing.models import Contact, Ticket, Type, Status, Registration
 
 from aplicatieTicketing.forms import RegistrationClass, ContactClass, TicketClass, TicketTypeClass
-from aplicatieTicketing.models import Registration, Contact, Ticket, TicketType
+from aplicatieTicketing.models import Contact, Ticket, TicketType
 
 
 
@@ -80,7 +81,10 @@ class ViewTicket(LoginRequiredMixin, ListView):
 
     def get_context_data(self, *args, **kwargs):
         data = super(ViewTicket, self).get_context_data(*args, **kwargs)
-        data['all_ticket'] = Ticket.objects.filter(user_id=self.request.user.id)
+        if self.request.user.is_superuser:
+            data['all_ticket'] = Ticket.objects.all()
+        else:
+            data['all_ticket'] = Ticket.objects.filter(user_id=self.request.user.id)
         return data
 
 
