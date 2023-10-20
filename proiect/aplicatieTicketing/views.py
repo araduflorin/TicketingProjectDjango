@@ -1,19 +1,14 @@
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.http import HttpResponse
-from django.shortcuts import render
 from django.template import loader
 from django.urls import reverse
 from django.views.generic import CreateView, ListView
 
-
-from aplicatieTicketing.forms import RegistrationClass, ContactClass, TicketClass, TypeTicket, StatusTicket
-from aplicatieTicketing.models import Contact, Ticket, Type, Status, Registration
-
 from aplicatieTicketing.forms import RegistrationClass, ContactClass, TicketClass, TicketTypeClass
+from aplicatieTicketing.forms import TypeTicket, StatusTicket
 from aplicatieTicketing.models import Contact, Ticket, TicketType
-
+from aplicatieTicketing.models import Type, Status, Registration
 
 
 # Create your views here.
@@ -56,7 +51,6 @@ class CreateTicket(LoginRequiredMixin, CreateView):
     form_class = TicketClass
     template_name = 'aplicatieTicketing/ticket_form.html'
 
-
     def form_valid(self, form):
         if form.is_valid():
             ticket_instance = form.save(commit=False)
@@ -94,6 +88,14 @@ class ListofUsersList(LoginRequiredMixin, ListView):
     template_name = 'aplicatieTicketing/user_form.html'
     context_object_name = 'users'
 
+    def get_context_data(self, *args, **kwargs):
+        data = super(ListofUsersList, self).get_context_data(*args, **kwargs)
+        if self.request.user.is_superuser:
+            data['all_users'] = User.objects.all()
+        else:
+            data['all_users'] = User.objects.filter(id=self.request.user.id)
+        return data
+
 
 class CreateTypeTicket(LoginRequiredMixin, CreateView):
     model = Type
@@ -110,7 +112,7 @@ class CreateStatusTicket(LoginRequiredMixin, CreateView):
     template_name = 'aplicatieTicketing/status_ticket.html'
 
     def get_success_url(self):
-        return reverse('aplicatieTicketing:ticket_list')
+        return reverse('aplicatieTicketing:status_ticket')
 
     def general(request):
         template_name = loader.get_template('aplicatieTicketing/general_index.html')
@@ -128,9 +130,14 @@ class CreateTicketType(CreateView):
 
 
 class TicketTypeView(ListView):
-    model = TicketType
-    form_class = TicketTypeClass
+    model = Type
+    form_class = TypeTicket
     template_name = 'aplicatieTicketing/ticket_type_index.html'
     context_object_name = 'type_ticket'
 
 
+class TicketStatusView(LoginRequiredMixin, ListView):
+    model = Status
+    form_class = StatusTicket
+    template_name = 'aplicatieTicketing/ticket_status_index.html'
+    context_object_name = 'st_ticket'
