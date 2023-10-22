@@ -1,9 +1,11 @@
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.contrib.messages.views import SuccessMessageMixin
+from django.http import HttpResponse, request
 from django.template import loader
 from django.urls import reverse
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, FormView, UpdateView
 
 from aplicatieTicketing.forms import RegistrationClass, ContactClass, TicketClass, TicketTypeClass
 from aplicatieTicketing.forms import TypeTicket, StatusTicket
@@ -11,28 +13,25 @@ from aplicatieTicketing.models import Contact, Ticket, TicketType
 from aplicatieTicketing.models import Type, Status, Registration
 
 
-# Create your views here.
-# class GeneralView:
-#     template_name = 'aplicatieTicketing/general_index.html'
-
-class CreateRegistrationView(CreateView):
-    model = Registration
-    # fields = ['first_name', 'last_name', 'id_user']
-    form_class = RegistrationClass
-    template_name = 'aplicatieTicketing/registration_form.html'
-
-    def get_success_url(self):
-        return reverse('aplicatieTicketing:generalHtml')
-
-
-# def all_users(request):
-#     list_users = Registration.objects.all()
-#     return render(request, 'aplicatieTicketing/user_form.html',{ 'users':list_users })
-
 class CreateContactView(CreateView):
     model = Contact
     form_class = ContactClass
     template_name = 'aplicatieTicketing/contact_form.html'
+
+
+    def get_success_url(self):
+        return reverse('aplicatieTicketing:success')
+
+def success(request):
+    template_name = loader.get_template('aplicatieTicketing/contact_succes.html')
+    return HttpResponse(template_name.render())
+
+
+class ViewContact(LoginRequiredMixin, ListView):
+    model = Contact
+    form_class = ContactClass
+    template_name = 'aplicatieTicketing/contact_list.html'
+    context_object_name = 'contact_list'
 
 
 def general(request):
@@ -61,10 +60,6 @@ class CreateTicket(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('aplicatieTicketing:ticket_list')
 
-    # def get_form_kwargs(self):
-    #     data = super(CreateTicket,self).get_form_kwargs()
-    #     data.update({'pk': None})
-    #     return data
 
 
 class ViewTicket(LoginRequiredMixin, ListView):
@@ -103,7 +98,22 @@ class CreateTypeTicket(LoginRequiredMixin, CreateView):
     template_name = 'aplicatieTicketing/type_ticket.html'
 
     def get_success_url(self):
-        return reverse('aplicatieTicketing:ticket_list')
+        return reverse('aplicatieTicketing:type_list')
+
+
+class UpdateTypeTicket(UpdateView):
+    model = Type
+    form_class = TypeTicket
+    template_name = 'aplicatieTicketing/type_ticket.html'
+
+    def get_success_url(self):
+        return reverse('aplicatieTicketing:type_list')
+
+class ViewTypeTicket(LoginRequiredMixin, ListView):
+    model = Type
+    form_class = TypeTicket
+    template_name = 'aplicatieTicketing/type_list.html'
+    context_object_name = 'type_list'
 
 
 class CreateStatusTicket(LoginRequiredMixin, CreateView):
@@ -112,32 +122,35 @@ class CreateStatusTicket(LoginRequiredMixin, CreateView):
     template_name = 'aplicatieTicketing/status_ticket.html'
 
     def get_success_url(self):
-        return reverse('aplicatieTicketing:status_ticket')
+        return reverse('aplicatieTicketing:status_list')
 
-    def general(request):
-        template_name = loader.get_template('aplicatieTicketing/general_index.html')
-        return HttpResponse(template_name.render())
+
+class ViewStatusTicket(LoginRequiredMixin, ListView):
+    model = Status
+    form_class = StatusTicket
+    template_name = 'aplicatieTicketing/status_list.html'
+    context_object_name = 'status_list'
 
 
 class CreateTicketType(CreateView):
     model = TicketType
     form_class = TicketTypeClass
-    template_name = 'aplicatieTicketing/ticket_type_form.html'
+    template_name = 'aplicatieTicketing/contact_list.html'
     context_object_name = 'type_ticket'
 
     def get_success_url(self):
         return reverse('aplicatieTicketing:list_type_ticket')
 
 
-class TicketTypeView(ListView):
-    model = Type
-    form_class = TypeTicket
-    template_name = 'aplicatieTicketing/ticket_type_index.html'
-    context_object_name = 'type_ticket'
+# class TicketTypeView(ListView):
+#     model = Type
+#     form_class = TypeTicket
+#     template_name = 'aplicatieTicketing/type_list.html'
+#     context_object_name = 'type_ticket'
 
 
 class TicketStatusView(LoginRequiredMixin, ListView):
     model = Status
     form_class = StatusTicket
-    template_name = 'aplicatieTicketing/ticket_status_index.html'
+    template_name = 'aplicatieTicketing/status_list.html'
     context_object_name = 'st_ticket'

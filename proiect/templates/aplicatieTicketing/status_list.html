@@ -1,7 +1,7 @@
 {% extends 'base_user.html' %}
 
 {% block content %}
-div class="container">
+<div class="container">
 
         <div class="col-md-12">
             <a class="btn btn-primary" style="margin-top: 110px; " href="{% url 'aplicatieTicketing:status_ticket' %}">Adaugare stare</a>
@@ -18,7 +18,7 @@ div class="container">
                         </tr>
                         </thead>
                         <tbody>
-                            {% for item in st_ticket %}
+                            {% for item in status_list %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
                                     <td>{{ item.name }}</td>

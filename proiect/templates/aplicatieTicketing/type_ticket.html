@@ -1,0 +1,35 @@
+{% extends 'base_user.html' %}
+{% block content %}
+{#    <style>#}
+{#    .errorlist {#}
+{#        color: red;#}
+{#    }#}
+{#    </style>#}
+{#    {{ valoare }}#}
+<div class="container">
+
+        <div class="col-md-12">
+
+            <div class="p text-left bg-light" style="margin-top: 110px; ">
+                <div class="shadow p-4 mb-5 bg-body rounded" >
+                    <div class="container pt-4" style = "text-align:center; margin-top: center; background:#808080" >
+                        <h5>Adauga tipul</h5>
+                    </div>
+                        <form method="POST">
+                                {% csrf_token %}
+                                {% for field in form %}
+                                     <div class="col-4">
+                                        {{ field.label }} <br> {{ field }} <br> {{ field.errors }}
+                                     </div>
+                                {% endfor %}
+                                  <br>
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-success">Salveaza</button>
+                                </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %}
+

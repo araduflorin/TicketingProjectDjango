@@ -24,8 +24,10 @@
                               <a class="btn " type="button" id="dropdownMenu1" data-bs-toggle="dropdown" aria-expanded="false" href="{% url 'aplicatieTicketing:lista_utilizatori' %}" >Adaugare</a>
                               <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                   <li><a class="dropdown-item" href="{% url 'aplicatieTicketing:ticket_list' %}">Tichet nou</a></li>
-                                  <li><a class="dropdown-item" href="{% url 'aplicatieTicketing:status_ticket' %}">Stare tichet</a></li>
-                                  <li><a class="dropdown-item" href="#">Tip tichet</a></li>
+                                  {% if request.user.is_superuser %}
+                                    <li><a class="dropdown-item" href="{% url 'aplicatieTicketing:status_list' %}">Stare tichet</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'aplicatieTicketing:type_list' %}">Tip tichet</a></li>
+                                  {% endif %}
                               </ul>
                           </div>
                           <div class="dropdown open">
@@ -33,6 +35,9 @@
                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                   <li><a class="dropdown-item" href="{% url 'aplicatieTicketing:ticket_list' %}">Raport tichet</a></li>
                                   <li><a class="dropdown-item" href="{% url 'aplicatieTicketing:lista_utilizatori' %}">Raport utilizator</a></li>
+                                   {% if request.user.is_superuser %}
+                                     <li><a class="dropdown-item" href="{% url 'aplicatieTicketing:contact_list' %}">Raport contacte</a></li>
+                                   {% endif %}
                                </ul>
                           </div>
                           <div class="dropdown open">
