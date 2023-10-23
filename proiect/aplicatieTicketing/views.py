@@ -7,9 +7,9 @@ from django.template import loader
 from django.urls import reverse
 from django.views.generic import CreateView, ListView, FormView, UpdateView
 
-from aplicatieTicketing.forms import RegistrationClass, ContactClass, TicketClass, TicketTypeClass
+from aplicatieTicketing.forms import RegistrationClass, ContactClass, TicketClass
 from aplicatieTicketing.forms import TypeTicket, StatusTicket
-from aplicatieTicketing.models import Contact, Ticket, TicketType
+from aplicatieTicketing.models import Contact, Ticket
 from aplicatieTicketing.models import Type, Status, Registration
 
 
@@ -50,6 +50,11 @@ class CreateTicket(LoginRequiredMixin, CreateView):
     form_class = TicketClass
     template_name = 'aplicatieTicketing/ticket_form.html'
 
+    def get_form_kwargs(self):
+        data = super(CreateTicket, self).get_form_kwargs()
+        data.update({'pk': None})
+        return data
+
     def form_valid(self, form):
         if form.is_valid():
             ticket_instance = form.save(commit=False)
@@ -60,6 +65,19 @@ class CreateTicket(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('aplicatieTicketing:ticket_list')
 
+
+class UpdateTicket(LoginRequiredMixin, UpdateView):
+    model = Ticket
+    form_class = TicketClass
+    template_name = 'aplicatieTicketing/ticket_form.html'
+
+    def get_form_kwargs(self):
+        data = super(UpdateTicket, self).get_form_kwargs()
+        data.update({'pk':self.kwargs['pk']})
+        return data
+
+    def get_success_url(self):
+        return reverse('aplicatieTicketing:ticket_list')
 
 
 class ViewTicket(LoginRequiredMixin, ListView):
@@ -97,14 +115,24 @@ class CreateTypeTicket(LoginRequiredMixin, CreateView):
     form_class = TypeTicket
     template_name = 'aplicatieTicketing/type_ticket.html'
 
+    def get_form_kwargs(self):
+        data = super(CreateTypeTicket, self).get_form_kwargs()
+        data.update({'pk': None})
+        return data
+
     def get_success_url(self):
         return reverse('aplicatieTicketing:type_list')
 
 
-class UpdateTypeTicket(UpdateView):
+class UpdateTypeTicket(LoginRequiredMixin, UpdateView):
     model = Type
     form_class = TypeTicket
     template_name = 'aplicatieTicketing/type_ticket.html'
+
+    def get_form_kwargs(self):
+        data = super(UpdateTypeTicket, self).get_form_kwargs()
+        data.update({'pk':self.kwargs['pk']})
+        return data
 
     def get_success_url(self):
         return reverse('aplicatieTicketing:type_list')
@@ -121,6 +149,25 @@ class CreateStatusTicket(LoginRequiredMixin, CreateView):
     form_class = StatusTicket
     template_name = 'aplicatieTicketing/status_ticket.html'
 
+    def get_form_kwargs(self):
+        data = super(CreateStatusTicket, self).get_form_kwargs()
+        data.update({'pk': None})
+        return data
+
+    def get_success_url(self):
+        return reverse('aplicatieTicketing:status_list')
+
+
+class UpdateStatusTicket(LoginRequiredMixin, UpdateView):
+    model = Status
+    form_class = StatusTicket
+    template_name = 'aplicatieTicketing/status_ticket.html'
+
+    def get_form_kwargs(self):
+        data = super(UpdateStatusTicket, self).get_form_kwargs()
+        data.update({'pk':self.kwargs['pk']})
+        return data
+
     def get_success_url(self):
         return reverse('aplicatieTicketing:status_list')
 
@@ -132,14 +179,14 @@ class ViewStatusTicket(LoginRequiredMixin, ListView):
     context_object_name = 'status_list'
 
 
-class CreateTicketType(CreateView):
-    model = TicketType
-    form_class = TicketTypeClass
-    template_name = 'aplicatieTicketing/contact_list.html'
-    context_object_name = 'type_ticket'
-
-    def get_success_url(self):
-        return reverse('aplicatieTicketing:list_type_ticket')
+# class CreateTicketType(CreateView):
+#     model = TicketType
+#     form_class = TicketTypeClass
+#     template_name = 'aplicatieTicketing/contact_list.html'
+#     context_object_name = 'type_ticket'
+#
+#     def get_success_url(self):
+#         return reverse('aplicatieTicketing:list_type_ticket')
 
 
 # class TicketTypeView(ListView):
@@ -149,8 +196,8 @@ class CreateTicketType(CreateView):
 #     context_object_name = 'type_ticket'
 
 
-class TicketStatusView(LoginRequiredMixin, ListView):
-    model = Status
-    form_class = StatusTicket
-    template_name = 'aplicatieTicketing/status_list.html'
-    context_object_name = 'st_ticket'
+# class TicketStatusView(LoginRequiredMixin, ListView):
+#     model = Status
+#     form_class = StatusTicket
+#     template_name = 'aplicatieTicketing/status_list.html'
+#     context_object_name = 'st_ticket'

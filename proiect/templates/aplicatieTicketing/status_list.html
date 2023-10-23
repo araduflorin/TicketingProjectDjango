@@ -15,6 +15,7 @@
                             <th>Index</th>
                             <th>Stare tichet</th>
                             <th>Descriere</th>
+                            <th>Actiuni</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -23,16 +24,10 @@
                                     <td>{{ forloop.counter }}</td>
                                     <td>{{ item.name }}</td>
                                     <td>{{ item.description }}</td>
-<!--                                    <td>{{ item.type }}</td>-->
-<!--                                    <td>{{ item.name }}</td>-->
-<!--                                    <td>{{ item.email }}</td>-->
-<!--                                    <td>{{ item.telephone }}</td>-->
-                <!--                    <td>{% if item.active is True %}-->
-                <!--                            Activ-->
-                <!--                        {% else %}-->
-                <!--                            Dezactivat-->
-                <!--                        {% endif %}-->
-                <!--                    </td>-->
+                                    <td>
+                                        <a class="btn btn-success" href="{% url 'aplicatieTicketing:modify_status' item.id %}">Editare</a>
+                                        <a class="btn btn-danger" href="#">Stergere</a>
+                                    </td>
 
                                 </tr>
                             {% endfor %}

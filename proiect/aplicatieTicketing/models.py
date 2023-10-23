@@ -57,11 +57,11 @@ class Type(models.Model):
     def __str__(self):
         return f"{self.name}{self.description}"
 
-class TicketType(models.Model):
-
-    type_name = models.CharField(max_length=30)
-    type_description = models.CharField(max_length=100)
-
-    def __str__(self):
-        return f"{self.type_name}{self.type_description}"
+# class TicketType(models.Model):
+#
+#     type_name = models.CharField(max_length=30)
+#     type_description = models.CharField(max_length=100)
+#
+#     def __str__(self):
+#         return f"{self.type_name}{self.type_description}"
 

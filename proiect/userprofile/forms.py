@@ -15,26 +15,27 @@ class NewAccountForm(UserCreationForm):
             'last_name':TextInput(attrs={'placeholder':'Nume','class':'form-control'}),
             'email':EmailInput(attrs={'placeholder':'Email','class':'form-control'}),
             'username':TextInput(attrs={'placeholder':'Username','class':'form-control'}),
-            # 'password1':forms.PasswordInput(attrs={'placeholder':'Password','class':'form-control'}),
-            # 'password2':forms.PasswordInput(attrs={'placeholder':'Confirm Password','class':'form-control'}),
-            # 'password1':forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'class': 'form-control'})),
-            # 'password2':forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password', 'class': 'form-control'})),
 
         }
 
-    def __init__(self,*args,**kwargs):
+    def __init__(self, pk, *args,**kwargs):
         super(NewAccountForm,self).__init__(*args,**kwargs)
         self.fields['password1'].widget = PasswordInput(attrs={'placeholder':'Password','class':'form-control'})
         self.fields['password2'].widget = PasswordInput(attrs={'placeholder':'Password','class':'form-control'})
+        self.pk = pk
 
     def clean(self):
         field_data = self.cleaned_data
         email_value = field_data.get('email')
         username_value = field_data.get('username')
-        if User.objects.filter(email=email_value).exists():
-            msg = 'Emailul deja exista! Te rugam sa adaugi alt email!'
-            self._errors['email'] = self.error_class([msg])
-        if User.objects.filter(username=username_value).exists():
-            msg = 'Username-ul exista! Te rugam sa alegi altul!'
-            self._errors['username'] = self.error_class([msg])
+        if self.pk:
+            if User.objects.filter(email=email_value).exclude(id=self.pk).exists():
+                self._errors['email'] = self.error_class(['Emailul deja exista! Te rugam sa adaugi alt email'])
+            if User.objects.filter(username=username_value).exclude(id=self.pk).exists():
+                self._errors['username'] = self.error_class(['Usernameul exista! Te rugam sa alegi altul'])
+        else:
+            if User.objects.filter(email=email_value).exists():
+                self._errors['email'] = self.error_class(['Emailul deja exista! Te rugam sa adaugi alt email'])
+            if User.objects.filter(username=username_value).exists():
+                self._errors['username'] = self.error_class(['Usernameul exista! Te rugam sa alegi altul'])
         return field_data

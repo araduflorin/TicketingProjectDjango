@@ -13,20 +13,11 @@ class CreateNewAccountView(CreateView):
     form_class = NewAccountForm
     template_name = 'aplicatieTicketing/registration_form.html'
 
+    def get_form_kwargs(self, **kwargs):
+        data = super(CreateNewAccountView, self).get_form_kwargs()
+        data.update({'pk': None})
+        return data
 
     def get_success_url(self):
         return reverse('aplicatieTicketing:login')
 
-# class ListofUsersList(LoginRequiredMixin, ListView):
-#     model = User
-#     form_class = NewAccountForm
-#     template_name = 'aplicatieTicketing/user_form.html'
-#     context_object_name = 'users'
-
-    # def get_context_data(self, *args, **kwargs):
-    #     data = super(ListofUsersList, self).get_context_data(*args, **kwargs)
-    #     if self.request.user.is_superuser:
-    #         data['all_users'] = User.objects.all()
-    #     else:
-    #         data['all_users'] = User.objects.filter(id=self.request.user.id)
-    #     return data

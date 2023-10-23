@@ -19,6 +19,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('', include('aplicatieTicketing.urls')),
+    path('', include('django.contrib.auth.urls'), {'next_page': '/'}, name='generalHtml'),
     path('userprofile/', include('userprofile.urls')),
     path('admin/', admin.site.urls),
     

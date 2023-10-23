@@ -5,7 +5,7 @@ from django.forms import TextInput, CharField, PasswordInput
 
 from aplicatieTicketing.models import Contact, Ticket, Status, Type, Registration
 
-from aplicatieTicketing.models import Contact, Ticket, TicketType
+from aplicatieTicketing.models import Contact, Ticket
 
 
 
@@ -65,8 +65,22 @@ class TicketClass(forms.ModelForm):
         'email': TextInput(attrs={'placeholder': "E-mail", 'class': 'form-control'}),
         'telephone': TextInput(attrs={'placeholder': "Telephone", 'class': 'form-control'}),
 
-
     }
+
+
+    def __init__(self, pk,  *args, **kwargs):
+        super(TicketClass, self).__init__(*args, **kwargs)
+        self.pk = pk
+
+    def clean(self):
+        name_value = self.cleaned_data.get('subject_ticket')
+        if self.pk:
+            if Ticket.objects.filter(subject_ticket__icontains=name_value).exclude(id=self.pk).exists():
+                    self._errors['subject_ticket'] = self.error_class(['Subiectul introdus deja exista'])
+        else:
+            if Ticket.objects.filter(subject_ticket__icontains=name_value).exists():
+                    self._errors['subject_ticket'] = self.error_class(['Subiectul introdus deja exista'])
+        return self.cleaned_data
 
 
 class StatusTicket(forms.ModelForm):
@@ -81,6 +95,20 @@ class StatusTicket(forms.ModelForm):
 
             }
 
+    def __init__(self, pk,  *args, **kwargs):
+        super(StatusTicket, self).__init__(*args, **kwargs)
+        self.pk = pk
+
+    def clean(self):
+        name_value = self.cleaned_data.get('name')
+        if self.pk:
+            if Status.objects.filter(name__icontains=name_value).exclude(id=self.pk).exists():
+                    self._errors['name'] = self.error_class(['Starea introdusa deja exista'])
+        else:
+            if Status.objects.filter(name__icontains=name_value).exists():
+                    self._errors['name'] = self.error_class(['Starea introdusa deja exista'])
+        return self.cleaned_data
+
 
 class TypeTicket(forms.ModelForm):
     class Meta:
@@ -92,6 +120,20 @@ class TypeTicket(forms.ModelForm):
             'description': TextInput(attrs={'placeholder': "Status description", 'class': 'form-control'}),
 
         }
+
+    def __init__(self, pk,  *args, **kwargs):
+        super(TypeTicket, self).__init__(*args, **kwargs)
+        self.pk = pk
+
+    def clean(self):
+        name_value = self.cleaned_data.get('name')
+        if self.pk:
+            if Type.objects.filter(name__icontains=name_value).exclude(id=self.pk).exists():
+                    self._errors['name'] = self.error_class(['Tipul introdus deja exista'])
+        else:
+            if Type.objects.filter(name__icontains=name_value).exists():
+                    self._errors['name'] = self.error_class(['Tipul introdus deja exista'])
+        return self.cleaned_data
 
 # class UserClass(forms.ModelForm):
 #     class Meta:
@@ -110,13 +152,13 @@ class TypeTicket(forms.ModelForm):
 
 
 
-class TicketTypeClass(forms.ModelForm):
-    class Meta:
-        model = TicketType
-        fields = ['type_name', 'type_description']
-
-    widgets = {
-        'type_name': TextInput(attrs={'placeholder': "Type ticket", 'class': 'form-control'}),
-        'type_description': TextInput(attrs={'placeholder': "Description", 'class': 'form-control'}),
-    }
+# class TicketTypeClass(forms.ModelForm):
+#     class Meta:
+#         model = TicketType
+#         fields = ['type_name', 'type_description']
+#
+#     widgets = {
+#         'type_name': TextInput(attrs={'placeholder': "Type ticket", 'class': 'form-control'}),
+#         'type_description': TextInput(attrs={'placeholder': "Description", 'class': 'form-control'}),
+#     }
 
