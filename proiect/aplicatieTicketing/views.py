@@ -99,7 +99,7 @@ class ListofUsersList(LoginRequiredMixin, ListView):
     model = Registration
     form_class = RegistrationClass
     template_name = 'aplicatieTicketing/user_form.html'
-    context_object_name = 'users'
+    # context_object_name = 'users'
 
     def get_context_data(self, *args, **kwargs):
         data = super(ListofUsersList, self).get_context_data(*args, **kwargs)

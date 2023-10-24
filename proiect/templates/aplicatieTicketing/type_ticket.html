@@ -2,14 +2,19 @@
 {% block content %}
 
 <div class="container">
+    <div class="col-md-12">
 
-        <div class="col-md-12">
 
-            <div class="p text-left bg-light" style="margin-top: 110px; ">
-                <div class="shadow p-4 mb-5 bg-body rounded" >
-                    <div class="container">
-                        <div class="alert alert-warning text-center" role="alert">Adauga tipul</div>
-                    </div>
+        <div class="p text-left bg-light" style="margin-top: 110px; ">
+
+                <div class="card border-0 shadow rounded w-100" style="background-color: rgba(245, 245, 245, 0.4);  opacity: 1;" >
+
+                        <div class="card-header border-0" style="background:#89CFF0">
+                            <h5 class="widget-homepage-desc text-center" >Test</h5>
+                        </div>
+                        <div class="card-body">
+
+
                             <form method="POST">
                                     {% csrf_token %}
                                     {% for field in form %}
@@ -22,9 +27,12 @@
                                         <button type="submit" class="btn btn-success">Salveaza</button>
                                     </div>
                             </form>
+                        </div>
+
                 </div>
 
         </div>
+
     </div>
 </div>
 {% endblock %}
