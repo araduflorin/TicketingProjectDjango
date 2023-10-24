@@ -50,6 +50,8 @@ class Status(models.Model):
     def __str__(self):
         return f"{self.name}{self.description}"
 
+
+
 class Type(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(max_length=500)

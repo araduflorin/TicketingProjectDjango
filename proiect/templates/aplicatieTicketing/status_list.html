@@ -9,8 +9,8 @@
 
                 <div class="shadow p-4 mb-5 bg-body rounded" style="margin-top: 10px;">
 
-                    <table class="table" style="margin-top: 10px;">
-                        <thead>
+                    <table class="table table-sm" style="margin-top: 10px;">
+                        <thead class="thead-dark">
                         <tr>
                             <th>Index</th>
                             <th>Stare tichet</th>
@@ -25,8 +25,8 @@
                                     <td>{{ item.name }}</td>
                                     <td>{{ item.description }}</td>
                                     <td>
-                                        <a class="btn btn-success" href="{% url 'aplicatieTicketing:modify_status' item.id %}">Editare</a>
-                                        <a class="btn btn-danger" href="#">Stergere</a>
+                                        <a class="btn btn-success btn-sm" href="{% url 'aplicatieTicketing:modify_status' item.id %}">Editare</a>
+                                        <a class="btn btn-danger btn-sm" href="{% url 'aplicatieTicketing:delete_status' item.id %}">Stergere</a>
                                     </td>
 
                                 </tr>

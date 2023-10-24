@@ -8,8 +8,8 @@
 
                 <div class="shadow p-4 mb-5 bg-body rounded" style="margin-top: 10px;">
 
-                    <table class="table" style="margin-top: 10px;">
-                        <thead>
+                    <table class="table table-sm" style="margin-top: 10px;">
+                        <thead class="thead-dark">
                         <tr>
                             <th>Index</th>
                             <th>Subiect tichet</th>
@@ -17,7 +17,6 @@
                             <th>Tip tichet</th>
                             <th>Nume utilizator</th>
                             <th>Email</th>
-                            <th>Telefon</th>
                             <th>Actiuni</th>
                         </tr>
                         </thead>
@@ -30,7 +29,6 @@
                                     <td>{{ item.type }}</td>
                                     <td>{{ item.name }}</td>
                                     <td>{{ item.email }}</td>
-                                    <td>{{ item.telephone }}</td>
                                     <td>
                                         <a class="btn btn-success btn-sm" href="{% url 'aplicatieTicketing:modify_ticket' item.id %}">Editare</a>
                                         <a class="btn btn-danger btn-sm" href="#">Stergere</a>
