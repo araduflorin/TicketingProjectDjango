@@ -35,11 +35,12 @@ class UpdateAccountView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse('userprofile:lista_utilizatori')
 
+
 class ViewAccountList(LoginRequiredMixin, ListView):
     model = User
     form_class = NewAccountForm
     template_name = 'aplicatieTicketing/user_form.html'
-    # context_object_name = 'users'
+
 
     def get_context_data(self, *args, **kwargs):
         data = super(ViewAccountList, self).get_context_data(*args, **kwargs)
@@ -48,4 +49,3 @@ class ViewAccountList(LoginRequiredMixin, ListView):
         else:
             data['all_users'] = User.objects.filter(id=self.request.user.id)
         return data
-

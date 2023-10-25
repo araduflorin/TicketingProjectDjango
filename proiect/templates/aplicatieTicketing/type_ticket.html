@@ -1,38 +1,28 @@
 {% extends 'base_user.html' %}
 {% block content %}
-
 <div class="container">
     <div class="col-md-12">
-
-
         <div class="p text-left bg-light" style="margin-top: 110px; ">
-
-                <div class="card border-0 shadow rounded w-100" style="background-color: rgba(245, 245, 245, 0.4);  " >
-
-                        <div class="card-header border-0" style="background:#ddb4ac">
-                            <h5 class="widget-homepage-desc text-center" >{{ action }} tipul de tichet</h5>
-                        </div>
-                        <div class="card-body">
-
-
-                            <form method="POST">
-                                    {% csrf_token %}
-                                    {% for field in form %}
-                                         <div class="col-4">
-                                            {{ field.label }} <br> {{ field }} <br> {{ field.errors }}
-                                         </div>
-                                    {% endfor %}
-                                      <br>
-                                    <div class="col-4">
-                                        <button type="submit" class="btn btn-success">Salveaza</button>
-                                    </div>
-                            </form>
-                        </div>
-
+            <div class="card border-0 shadow rounded w-100" style="background-color: rgba(245, 245, 245, 0.4);  ">
+                <div class="card-header border-0" style="background:#ddb4ac">
+                    <h5 class="widget-homepage-desc text-center">{{ action }} tipul de tichet</h5>
                 </div>
-
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div class="col-4">
+                            {{ field.label }} <br> {{ field }} <br> {{ field.errors }}
+                        </div>
+                        {% endfor %}
+                        <br>
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-success">Salveaza</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-
     </div>
 </div>
 {% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base_user.html' %}
+{% block content %}
+<div class="container">
+    <div class="col-md-12">
+        <div class="p text-left bg-light" style="margin-top: 110px; ">
+            <div class="card border-0 shadow rounded w-100" style="background-color: rgba(245, 245, 245, 0.4);  ">
+                <div class="card-header border-0" style="background:#ddb4ac">
+                    <h5 class="widget-homepage-desc text-center">Raport tichete</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Index</th>
+                            <th>Subiect tichet</th>
+                            <th>Stare</th>
+                            <th>Tip tichet</th>
+                            <th>Nume utilizator</th>
+                            <th>Email</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in all_ticket %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ item.subject_ticket }}</td>
+                            <td>{{ item.status }}</td>
+                            <td>{{ item.type }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.email }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

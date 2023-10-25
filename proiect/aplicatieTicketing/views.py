@@ -52,6 +52,11 @@ class CreateTicket(LoginRequiredMixin, CreateView):
     form_class = TicketClass
     template_name = 'aplicatieTicketing/ticket_form.html'
 
+    def get_context_data(self, *args, **kwargs):
+        data = super(CreateTicket, self).get_context_data(*args, **kwargs)
+        data['action'] = 'Adauga'
+        return data
+
     def get_form_kwargs(self):
         data = super(CreateTicket, self).get_form_kwargs()
         data.update({'pk': None})
@@ -72,6 +77,11 @@ class UpdateTicket(LoginRequiredMixin, UpdateView):
     model = Ticket
     form_class = TicketClass
     template_name = 'aplicatieTicketing/ticket_form.html'
+
+    def get_context_data(self, *args, **kwargs):
+        data = super(UpdateTicket, self).get_context_data(*args, **kwargs)
+        data['action'] = 'Modifica'
+        return data
 
     def get_form_kwargs(self):
         data = super(UpdateTicket, self).get_form_kwargs()
@@ -98,6 +108,20 @@ class ViewTicket(LoginRequiredMixin, ListView):
         return data
 
 
+class ListTicket(LoginRequiredMixin, ListView):
+    model = Ticket
+    form_class = TicketClass
+    template_name = 'aplicatieTicketing/ticket_view.html'
+    context_object_name = 'ticket'
+
+
+    def get_context_data(self, *args, **kwargs):
+        data = super(ListTicket, self).get_context_data(*args, **kwargs)
+        if self.request.user.is_superuser:
+            data['all_ticket'] = Ticket.objects.all()
+        else:
+            data['all_ticket'] = Ticket.objects.filter(user_id=self.request.user.id)
+        return data
 
 
 class CreateTypeTicket(LoginRequiredMixin, CreateView):
@@ -150,6 +174,11 @@ class CreateStatusTicket(LoginRequiredMixin, CreateView):
     form_class = StatusTicket
     template_name = 'aplicatieTicketing/status_ticket.html'
 
+    def get_context_data(self, *args, **kwargs):
+        data = super(CreateStatusTicket, self).get_context_data(*args, **kwargs)
+        data['action'] = 'Adauga'
+        return data
+
     def get_form_kwargs(self):
         data = super(CreateStatusTicket, self).get_form_kwargs()
         data.update({'pk': None})
@@ -163,6 +192,11 @@ class UpdateStatusTicket(LoginRequiredMixin, UpdateView):
     model = Status
     form_class = StatusTicket
     template_name = 'aplicatieTicketing/status_ticket.html'
+
+    def get_context_data(self, *args, **kwargs):
+        data = super(UpdateStatusTicket, self).get_context_data(*args, **kwargs)
+        data['action'] = 'Modifica'
+        return data
 
     def get_form_kwargs(self):
         data = super(UpdateStatusTicket, self).get_form_kwargs()
