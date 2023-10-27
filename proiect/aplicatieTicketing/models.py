@@ -16,15 +16,20 @@ class Contact(models.Model):
 
 
 class Ticket(models.Model):
+
+    st1 = 'stare1'
+    st2 = 'stare2'
+    st3 = 'stare3'
+    stare = [(st1, 'Inchis'), (st2, 'Confirmat'),(st3, 'Respins'),]
     subject_ticket = models.CharField(max_length=30)
-    status = models.CharField(max_length=15)
+    status = models.CharField(max_length=15, choices=Status.name)
     type = models.CharField(max_length=15)
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=40)
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.subject_ticket}{self.status}{self.type}{self.name}{self.email}"
+        return f"{self.subject_ticket}{Status(self.status)}{self.type}{self.name}{self.email}"
 
 
 class Status(models.Model):
