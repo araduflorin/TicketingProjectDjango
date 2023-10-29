@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.forms import TextInput, CharField, PasswordInput
+from django.forms import TextInput, CharField, PasswordInput, Select, ChoiceField
 
 from aplicatieTicketing.models import Contact, Ticket, Status, Type
 from aplicatieTicketing.models import Contact, Ticket
@@ -26,7 +26,7 @@ class ContactClass(forms.ModelForm):
 class TicketClass(forms.ModelForm):
     class Meta:
         model = Ticket
-        fields = ['subject_ticket', 'status', 'type', 'name',
+        fields = ['subject_ticket', 'name', 'status', 'type',
                   'email']
 
         labels = {"subject_ticket": "Subiect tichet", "status": "Stare", "type": "Tip tichet",
@@ -34,8 +34,8 @@ class TicketClass(forms.ModelForm):
 
     widgets = {
         'subject_ticket': TextInput(attrs={'placeholder': "Subiect", 'class': 'form-control'}),
-        'status': TextInput(attrs={'placeholder': "Stare", 'class': 'form-control'}),
-        'type': TextInput(attrs={'placeholder': "Tip", 'class': 'form-control'}),
+        'status': Select(attrs={'placeholder': "Stare", 'class': 'form-control'}),
+        'type': Select(attrs={'placeholder': "Tip", 'class': 'form-control'}),
         'name': TextInput(attrs={'placeholder': "Nume", 'class': 'form-control'}),
         'email': TextInput(attrs={'placeholder': "Email", 'class': 'form-control'}),
 
@@ -44,6 +44,9 @@ class TicketClass(forms.ModelForm):
 
     def __init__(self, pk, *args, **kwargs):
         super(TicketClass, self).__init__(*args, **kwargs)
+        # self.fields['status'].widget = ChoiceField(choices={'placeholder': "Stare", 'class': 'form-control'}),
+        # self.fields['type'].widget = ChoiceField(choices={'placeholder': "Tip", 'class': 'form-control'}),
+
         self.pk = pk
 
     def clean(self):
