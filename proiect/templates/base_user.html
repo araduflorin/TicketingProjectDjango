@@ -40,8 +40,10 @@
                           <div class="dropdown open">
                               <a class="btn dropdown-toggle" type="button" id="dropdownMenu3" data-bs-toggle="dropdown" aria-expanded="false" href="#">Contul meu</a>
                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <li><a class="dropdown-item" href="{% url 'userprofile:edit_user' user.id %}">Detalii cont</a></li>
-                                  <li><a class="dropdown-item" href="{% url 'password_reset' %}">Schimba parola</a></li>
+                                    {% if request.user.is_authenticated %}
+                                       <li><a class="dropdown-item" href="{% url 'userprofile:edit_user' user.id %}">Detalii cont</a></li>
+                                       <li><a class="dropdown-item" href="{% url 'password_reset' %}">Schimba parola</a></li>
+                                    {% endif %}
                                </ul>
                           </div>
                               <a class="label" style="padding-left: 35%;">Utilizator: {{request.user.username}}</a>

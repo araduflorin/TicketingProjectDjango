@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import CreateView, ListView, UpdateView
 
-from userprofile.forms import NewAccountForm
+from userprofile.forms import NewAccountForm, EditAccountForm
 
 
 # Create your views here.
@@ -22,9 +22,10 @@ class CreateNewAccountView(CreateView):
         return reverse('aplicatieTicketing:login')
 
 
+
 class UpdateAccountView(LoginRequiredMixin, UpdateView):
     model = User
-    form_class = NewAccountForm
+    form_class = EditAccountForm
     template_name = 'aplicatieTicketing/edit_user_form.html'
 
     def get_form_kwargs(self, **kwargs):

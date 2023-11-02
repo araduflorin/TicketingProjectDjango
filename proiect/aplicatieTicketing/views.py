@@ -20,14 +20,13 @@ class CreateContactView(CreateView):
     form_class = ContactClass
     template_name = 'aplicatieTicketing/contact_form.html'
 
-
     def get_success_url(self):
         return reverse('aplicatieTicketing:success')
 
 def success(request):
-    template_name = loader.get_template('aplicatieTicketing/contact_succes.html')
+    template_name = loader.get_template\
+        ('aplicatieTicketing/contact_succes.html')
     return HttpResponse(template_name.render())
-
 
 class ViewContact(LoginRequiredMixin, ListView):
     model = Contact
@@ -35,9 +34,9 @@ class ViewContact(LoginRequiredMixin, ListView):
     template_name = 'aplicatieTicketing/contact_list.html'
     context_object_name = 'contact_list'
 
-
 def general(request):
-    template_name = loader.get_template('aplicatieTicketing/general_index.html')
+    template_name = loader.get_template\
+        ('aplicatieTicketing/general_index.html')
     return HttpResponse(template_name.render())
 
 

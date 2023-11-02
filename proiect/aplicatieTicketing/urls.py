@@ -8,14 +8,10 @@ app_name = 'aplicatieTicketing'
 
 urlpatterns = [
     path('', views.general, name='generalHtml'),
-    # path('adaugare/', views.CreateRegistrationView.as_view(), name='adaugare'),
     path('accounts/', include('django.contrib.auth.urls'), {'next_page': '/'}, name='login'),
-    # path('login/', LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('contact/', views.CreateContactView.as_view(), name='contact'),
     path('contact_list/', views.ViewContact.as_view(), name='contact_list'),
     path('success/', views.success, name='success'),
-    # path('user_list/', views.all_users, name='lista_utilizatori'),
-    # path('user_list/', views.ListofUsersList.as_view(), name='lista_utilizatori'),
     path('ticket/', views.CreateTicket.as_view(), name='ticket'),
     path('ticket_list/', views.ViewTicket.as_view(), name='ticket_list'),
     path('ticket_view/', views.ListTicket.as_view(), name='ticket_view'),
