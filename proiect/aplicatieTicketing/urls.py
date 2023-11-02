@@ -9,6 +9,7 @@ app_name = 'aplicatieTicketing'
 urlpatterns = [
     path('', views.general, name='generalHtml'),
     path('accounts/', include('django.contrib.auth.urls'), {'next_page': '/'}, name='login'),
+    path('login/', views.login_user, name='login'),
     path('contact/', views.CreateContactView.as_view(), name='contact'),
     path('contact_list/', views.ViewContact.as_view(), name='contact_list'),
     path('success/', views.success, name='success'),

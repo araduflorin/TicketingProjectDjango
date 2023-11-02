@@ -18,10 +18,13 @@ from django.contrib import admin
 from django.contrib.auth.views import LoginView
 from django.urls import path, include
 
+from aplicatieTicketing import views
+# from aplicatieTicketing.views import Login
+
 urlpatterns = [
     path('', include('aplicatieTicketing.urls')),
     path('', include('django.contrib.auth.urls'), {'next_page': '/'}, name='login'),
-    path('login/', LoginView.as_view(template_name='registration/login.html'), name='login'),
+    path('login/', LoginView.as_view(), name='login'),
     path('userprofile/', include('userprofile.urls')),
     path('admin/', admin.site.urls),
     

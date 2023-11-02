@@ -1,10 +1,15 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.forms import TextInput, CharField, PasswordInput, Select, ChoiceField
 
 from aplicatieTicketing.models import Contact, Ticket, Status, Type
 from aplicatieTicketing.models import Contact, Ticket
 
+
+#
+# "Vă rugăm să introduceți un nume de utilizator și o parolă corecte." \
+#              " Rețineți că ambele câmpuri pot fi sensibile la majuscule."
 
 class ContactClass(forms.ModelForm):
     class Meta:
@@ -33,12 +38,11 @@ class TicketClass(forms.ModelForm):
                   "name": "Nume utilizator", "email": "Email"}
 
         widgets = {
-            'subject_ticket': TextInput(attrs={ 'class': 'form-control','style': 'height:32px'}),
-            'status': Select(attrs={ 'class': 'form-control','style': 'height:32px'}),
-            'type': Select(attrs={ 'class': 'form-control','style': 'height:32px'}),
-            'name': TextInput(attrs={ 'class': 'form-control','style': 'height:32px'}),
-            'email': TextInput(attrs={ 'class': 'form-control','style': 'height:32px'}),
-
+            'subject_ticket': TextInput(attrs={'class': 'form-control', 'style': 'height:32px'}),
+            'status': Select(attrs={'class': 'form-control', 'style': 'height:32px'}),
+            'type': Select(attrs={'class': 'form-control', 'style': 'height:32px'}),
+            'name': TextInput(attrs={'class': 'form-control', 'style': 'height:32px'}),
+            'email': TextInput(attrs={'class': 'form-control', 'style': 'height:32px'}),
 
         }
 
@@ -115,4 +119,3 @@ class TypeTicket(forms.ModelForm):
             if Type.objects.filter(name__icontains=name_value).exists():
                 self._errors['name'] = self.error_class(['Tipul introdus deja exista'])
         return self.cleaned_data
-

@@ -5,8 +5,14 @@
     <div class="p-3 text-center bg-light" style="margin-top: 10px;">
         <h3 class="mb-3"> Platforma de management a serviciilor IT</h3>
     </div>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+
+        <link rel="stylesheet" href="{% static 'css/bootstrap441.min.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+        <script src="{% static 'css/bootstrap532.min.css' %}" type="text/css"></script>
+        <script src="{% static 'css/bootstrap532.min.js' %}" type="text/javascript"></script>
+        <script src="{% static 'css/jquery360.slim.js' %}" type="text/javascript"></script>
+        <script src="{% static 'css/bootstrap460.min.js' %}" type="text/javascript"></script>
+
 </head>
 <body>
 <div class="container" style="margin-top: 10px;>
@@ -20,11 +26,6 @@
                     </nav>
                 </div>
             </div>
-    {% if messages %}
-        {% for message in messages %}
-            {{ message }}
-        {% endfor %}
-    {% endif %}
 </div>
 
 

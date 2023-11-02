@@ -1,10 +1,12 @@
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse, request
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.template import loader
 from django.urls import reverse
 from django.views.generic import CreateView, ListView, FormView, UpdateView
@@ -15,6 +17,25 @@ from aplicatieTicketing.models import Contact, Ticket
 from aplicatieTicketing.models import Type, Status
 
 
+def login_user(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            # messages.success(request, ("Logare reusita"))
+            login(request, user)
+            return redirect('aplicatieTicketing:ticket_list')
+
+        else:
+            messages.success(request, ("A fost o eroare la logare, incearca din nou..."))
+            return redirect('login')
+
+
+    else:
+        return render(request, 'registration/login.html', {})
+
+
 class CreateContactView(CreateView):
     model = Contact
     form_class = ContactClass
@@ -23,10 +44,11 @@ class CreateContactView(CreateView):
     def get_success_url(self):
         return reverse('aplicatieTicketing:success')
 
+
 def success(request):
-    template_name = loader.get_template\
-        ('aplicatieTicketing/contact_succes.html')
+    template_name = loader.get_template('aplicatieTicketing/contact_succes.html')
     return HttpResponse(template_name.render())
+
 
 class ViewContact(LoginRequiredMixin, ListView):
     model = Contact
@@ -34,8 +56,9 @@ class ViewContact(LoginRequiredMixin, ListView):
     template_name = 'aplicatieTicketing/contact_list.html'
     context_object_name = 'contact_list'
 
+
 def general(request):
-    template_name = loader.get_template\
+    template_name = loader.get_template \
         ('aplicatieTicketing/general_index.html')
     return HttpResponse(template_name.render())
 
@@ -84,7 +107,7 @@ class UpdateTicket(LoginRequiredMixin, UpdateView):
 
     def get_form_kwargs(self):
         data = super(UpdateTicket, self).get_form_kwargs()
-        data.update({'pk':self.kwargs['pk']})
+        data.update({'pk': self.kwargs['pk']})
         return data
 
     def get_success_url(self):
@@ -96,7 +119,6 @@ class ViewTicket(LoginRequiredMixin, ListView):
     form_class = TicketClass
     template_name = 'aplicatieTicketing/ticket_form_list.html'
     context_object_name = 'ticket'
-
 
     def get_context_data(self, *args, **kwargs):
         data = super(ViewTicket, self).get_context_data(*args, **kwargs)
@@ -112,7 +134,6 @@ class ListTicket(LoginRequiredMixin, ListView):
     form_class = TicketClass
     template_name = 'aplicatieTicketing/ticket_view.html'
     context_object_name = 'ticket'
-
 
     def get_context_data(self, *args, **kwargs):
         data = super(ListTicket, self).get_context_data(*args, **kwargs)
@@ -147,7 +168,6 @@ class UpdateTypeTicket(LoginRequiredMixin, UpdateView):
     form_class = TypeTicket
     template_name = 'aplicatieTicketing/type_ticket.html'
 
-
     def get_context_data(self, *args, **kwargs):
         data = super(UpdateTypeTicket, self).get_context_data(*args, **kwargs)
         data['action'] = 'Modifica'
@@ -155,11 +175,12 @@ class UpdateTypeTicket(LoginRequiredMixin, UpdateView):
 
     def get_form_kwargs(self):
         data = super(UpdateTypeTicket, self).get_form_kwargs()
-        data.update({'pk':self.kwargs['pk']})
+        data.update({'pk': self.kwargs['pk']})
         return data
 
     def get_success_url(self):
         return reverse('aplicatieTicketing:type_list')
+
 
 class ViewTypeTicket(LoginRequiredMixin, ListView):
     model = Type
@@ -199,12 +220,11 @@ class UpdateStatusTicket(LoginRequiredMixin, UpdateView):
 
     def get_form_kwargs(self):
         data = super(UpdateStatusTicket, self).get_form_kwargs()
-        data.update({'pk':self.kwargs['pk']})
+        data.update({'pk': self.kwargs['pk']})
         return data
 
     def get_success_url(self):
         return reverse('aplicatieTicketing:status_list')
-
 
 
 class ViewStatusTicket(LoginRequiredMixin, ListView):
@@ -213,10 +233,12 @@ class ViewStatusTicket(LoginRequiredMixin, ListView):
     template_name = 'aplicatieTicketing/status_list.html'
     context_object_name = 'status_list'
 
+
 @login_required
 def delete_status(request, pk):
     Status.objects.filter(id=pk).delete()
     return redirect('aplicatieTicketing:status_list')
+
 
 @login_required
 def delete_type(request, pk):
