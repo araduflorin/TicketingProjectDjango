@@ -1,14 +1,17 @@
+
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
-from django.contrib.auth.views import LoginView
-from django.contrib.messages.views import SuccessMessageMixin
+
 from django.http import HttpResponse, request
 from django.shortcuts import redirect, render
 from django.template import loader
 from django.urls import reverse
+from django.utils import timezone
+import datetime
+
 from django.views.generic import CreateView, ListView, FormView, UpdateView
 
 from aplicatieTicketing.forms import ContactClass, TicketClass
@@ -25,7 +28,7 @@ def login_user(request):
         if user is not None:
             # messages.success(request, ("Logare reusita"))
             login(request, user)
-            return redirect('aplicatieTicketing:ticket_list')
+            return redirect('aplicatieTicketing:ticket_inter')
 
         else:
             messages.success(request, ("A fost o eroare la logare, incearca din nou..."))
@@ -34,6 +37,27 @@ def login_user(request):
 
     else:
         return render(request, 'registration/login.html', {})
+
+
+class InterPageTicket(LoginRequiredMixin, ListView):
+    model = Ticket
+    form_class = TicketClass
+    template_name = 'aplicatieTicketing/ticket_intermediar.html'
+    context_object_name = 'ticket'
+
+    def get_context_data(self, *args, **kwargs):
+        data = super(InterPageTicket, self).get_context_data(*args, **kwargs)
+        if self.request.user.is_superuser:
+            data['all_ticket'] = Ticket.objects.all()
+            data['count'] = Ticket.objects.all().count()
+            data['count_final'] = Ticket.objects.filter(status=1).count()
+            data['count_today'] = Ticket.objects.filter(created_at=datetime.date.today()).count()
+        else:
+            data['all_ticket'] = Ticket.objects.filter(user_id=self.request.user.id)
+            data['count'] = Ticket.objects.filter(user_id=self.request.user.id).count()
+            data['count_final'] = Ticket.objects.filter(user_id=self.request.user.id, status=1).count()
+            # data['count_today'] = Ticket.objects.filter(created_at=timezone.now()).count()
+        return data
 
 
 class CreateContactView(CreateView):
@@ -118,7 +142,7 @@ class ViewTicket(LoginRequiredMixin, ListView):
     model = Ticket
     form_class = TicketClass
     template_name = 'aplicatieTicketing/ticket_form_list.html'
-    context_object_name = 'ticket'
+    # context_object_name = 'ticket'
 
     def get_context_data(self, *args, **kwargs):
         data = super(ViewTicket, self).get_context_data(*args, **kwargs)
@@ -127,6 +151,7 @@ class ViewTicket(LoginRequiredMixin, ListView):
         else:
             data['all_ticket'] = Ticket.objects.filter(user_id=self.request.user.id)
         return data
+
 
 
 class ListTicket(LoginRequiredMixin, ListView):
@@ -139,9 +164,17 @@ class ListTicket(LoginRequiredMixin, ListView):
         data = super(ListTicket, self).get_context_data(*args, **kwargs)
         if self.request.user.is_superuser:
             data['all_ticket'] = Ticket.objects.all()
+            # data['count'] = Ticket.objects.all().count()
         else:
             data['all_ticket'] = Ticket.objects.filter(user_id=self.request.user.id)
+            # data['count'] = Ticket.objects.filter(user_id=self.request.user.id).count()
         return data
+
+
+# def count_ticket(request):
+#     count = Ticket.objects.all().count()
+#     context = {'count': count}
+#     return render(request, 'aplicatieTicketing/ticket_view.html', context)
 
 
 class CreateTypeTicket(LoginRequiredMixin, CreateView):
