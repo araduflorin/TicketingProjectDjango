@@ -10,7 +10,7 @@ from django.shortcuts import redirect, render
 from django.template import loader
 from django.urls import reverse
 from django.utils import timezone
-import datetime
+from datetime import datetime
 
 from django.views.generic import CreateView, ListView, FormView, UpdateView
 
@@ -51,7 +51,8 @@ class InterPageTicket(LoginRequiredMixin, ListView):
             data['all_ticket'] = Ticket.objects.all()
             data['count'] = Ticket.objects.all().count()
             data['count_final'] = Ticket.objects.filter(status=1).count()
-            data['count_today'] = Ticket.objects.filter(created_at=datetime.date.today()).count()
+            data['count_today'] = Ticket.objects.filter(created_at=datetime.now).count()
+            # dat = datetime.now().today()
         else:
             data['all_ticket'] = Ticket.objects.filter(user_id=self.request.user.id)
             data['count'] = Ticket.objects.filter(user_id=self.request.user.id).count()
