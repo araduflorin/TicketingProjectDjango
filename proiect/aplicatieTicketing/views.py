@@ -8,10 +8,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, request
 from django.shortcuts import redirect, render
 from django.template import loader
+from django.templatetags.tz import utc
 from django.urls import reverse
 from django.utils import timezone
 from datetime import datetime
-
+from datetime import date
+# import datetime
 from django.views.generic import CreateView, ListView, FormView, UpdateView
 
 from aplicatieTicketing.forms import ContactClass, TicketClass
@@ -44,15 +46,20 @@ class InterPageTicket(LoginRequiredMixin, ListView):
     form_class = TicketClass
     template_name = 'aplicatieTicketing/ticket_intermediar.html'
     context_object_name = 'ticket'
+    dat = timezone.now().day
 
     def get_context_data(self, *args, **kwargs):
         data = super(InterPageTicket, self).get_context_data(*args, **kwargs)
+        now = datetime.now()
+        current_day = now.day
+        # d=datetime.now().strftime('%d')
         if self.request.user.is_superuser:
             data['all_ticket'] = Ticket.objects.all()
             data['count'] = Ticket.objects.all().count()
             data['count_final'] = Ticket.objects.filter(status=1).count()
-            data['count_today'] = Ticket.objects.filter(created_at=datetime.now).count()
-            # dat = datetime.now().today()
+            data['count_today'] = Ticket.objects.filter(created_at=current_day).count()
+
+
         else:
             data['all_ticket'] = Ticket.objects.filter(user_id=self.request.user.id)
             data['count'] = Ticket.objects.filter(user_id=self.request.user.id).count()
