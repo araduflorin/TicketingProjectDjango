@@ -50,14 +50,16 @@ class InterPageTicket(LoginRequiredMixin, ListView):
 
     def get_context_data(self, *args, **kwargs):
         data = super(InterPageTicket, self).get_context_data(*args, **kwargs)
-        now = datetime.now()
-        current_day = now.day
+        now = datetime.now().day
+        # current_day = now.day
         # d=datetime.now().strftime('%d')
         if self.request.user.is_superuser:
             data['all_ticket'] = Ticket.objects.all()
             data['count'] = Ticket.objects.all().count()
             data['count_final'] = Ticket.objects.filter(status=1).count()
-            data['count_today'] = Ticket.objects.filter(created_at=current_day).count()
+            data['count_today'] = Ticket.objects.filter(created_at__day=now).count()
+            data['count_today_final'] = Ticket.objects.filter(created_at__day=now, status=1).count()
+
 
 
         else:
