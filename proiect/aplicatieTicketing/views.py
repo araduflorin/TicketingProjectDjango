@@ -60,13 +60,12 @@ class InterPageTicket(LoginRequiredMixin, ListView):
             data['count_today'] = Ticket.objects.filter(created_at__day=now).count()
             data['count_today_final'] = Ticket.objects.filter(created_at__day=now, status=1).count()
 
-
-
         else:
             data['all_ticket'] = Ticket.objects.filter(user_id=self.request.user.id)
             data['count'] = Ticket.objects.filter(user_id=self.request.user.id).count()
             data['count_final'] = Ticket.objects.filter(user_id=self.request.user.id, status=1).count()
-            # data['count_today'] = Ticket.objects.filter(created_at=timezone.now()).count()
+            data['count_today'] = Ticket.objects.filter(user_id=self.request.user.id, created_at__day=now).count()
+            data['count_today_final'] = Ticket.objects.filter(user_id=self.request.user.id, created_at__day=now, status=1).count()
         return data
 
 
@@ -122,6 +121,10 @@ class CreateTicket(LoginRequiredMixin, CreateView):
         if form.is_valid():
             ticket_instance = form.save(commit=False)
             ticket_instance.user_id = self.request.user.id
+            # ticket_instance.status = self.request.status.name
+            # ticket_instance.type = self.request.type.name
+            ticket_instance.name = self.request.user.username
+            ticket_instance.email = self.request.user.email
             ticket_instance.save()
         return super(CreateTicket, self).form_valid(form)
 

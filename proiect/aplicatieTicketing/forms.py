@@ -31,18 +31,15 @@ class ContactClass(forms.ModelForm):
 class TicketClass(forms.ModelForm):
     class Meta:
         model = Ticket
-        fields = ['subject_ticket', 'name', 'status', 'type',
-                  'email']
+        fields = ['subject_ticket', 'status', 'type']
 
-        labels = {"subject_ticket": "Subiect tichet", "status": "Stare", "type": "Tip tichet",
-                  "name": "Nume utilizator", "email": "Email"}
+        labels = {"subject_ticket": "Subiect tichet", "status": "Stare", "type": "Tip tichet"}
 
         widgets = {
             'subject_ticket': TextInput(attrs={'class': 'form-control', 'style': 'height:32px'}),
             'status': Select(attrs={'class': 'form-control', 'style': 'height:32px'}),
             'type': Select(attrs={'class': 'form-control', 'style': 'height:32px'}),
-            'name': TextInput(attrs={'class': 'form-control', 'style': 'height:32px'}),
-            'email': TextInput(attrs={'class': 'form-control', 'style': 'height:32px'}),
+            # 'email': TextInput(attrs={'class': 'form-control', 'style': 'height:32px'}),
 
         }
 

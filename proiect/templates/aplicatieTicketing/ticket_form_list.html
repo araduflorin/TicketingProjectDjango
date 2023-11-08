@@ -27,7 +27,23 @@
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
                                     <td>{{ item.subject_ticket }}</td>
-                                    <td>{{ item.status.name }}</td>
+                                    <td class=" align-middle">
+                                        {% if item.status.name == "Confirmat" %}
+                                            <span class="badge-ticket-acknowledget badge" style="background-color:#007bff; color:#fff";>{{ item.status.name }}</span>
+                                        {% elif item.status.name == "In lucru" %}
+                                            <span class="badge-ticket-acknowledget badge" style="background-color:#d58512; color:#fff";>{{ item.status.name }}</span>
+                                        {% elif item.status.name == "Rezolvat" %}
+                                            <span class="badge-ticket-acknowledget badge" style="background-color:#00a65a; color:#fff";>{{ item.status.name }}</span>
+                                        {% elif item.status.name == "Inchis" %}
+                                            <span class="badge-ticket-acknowledget badge" style="background-color:#4d4d4d; color:#fff";>{{ item.status.name }}</span>
+                                        {% elif item.status.name == "Anulat" %}
+                                            <span class="badge-ticket-acknowledget badge" style="background-color:#f56954; color:#fff";>{{ item.status.name }}</span>
+                                        {% elif item.status.name == "Trimis" %}
+                                            <span class="badge-ticket-acknowledget badge" style="background-color:#00c0ef; color:#fff";>{{ item.status.name }}</span>
+                                        {% elif item.status.name == "Respins" %}
+                                            <span class="badge-ticket-acknowledget badge" style="background-color:#dc3545; color:#fff";>{{ item.status.name }}</span>
+                                        {% endif %}
+                                    </td>
                                     <td>{{ item.type.name }}</td>
                                     <td>{{ item.name }}</td>
                                     <td>{{ item.email }}</td>
