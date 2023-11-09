@@ -31,21 +31,22 @@ class ContactClass(forms.ModelForm):
 class TicketClass(forms.ModelForm):
     class Meta:
         model = Ticket
-        fields = ['subject_ticket', 'status', 'type']
+        fields = ['subject_ticket', 'type', 'description']
 
-        labels = {"subject_ticket": "Subiect tichet", "status": "Stare", "type": "Tip tichet"}
+        labels = {"subject_ticket": "Subiect tichet", "type": "Tip tichet", "description":"Descriere"}
 
         widgets = {
             'subject_ticket': TextInput(attrs={'class': 'form-control', 'style': 'height:32px'}),
-            'status': Select(attrs={'class': 'form-control', 'style': 'height:32px'}),
+            # 'status': Select(attrs={'class': 'form-control', 'style': 'height:32px'}),
             'type': Select(attrs={'class': 'form-control', 'style': 'height:32px'}),
+            'description': TextInput(attrs={'class': 'form-control', 'style': 'height:32px'}),
             # 'email': TextInput(attrs={'class': 'form-control', 'style': 'height:32px'}),
 
         }
 
     def __init__(self, pk, *args, **kwargs):
         super(TicketClass, self).__init__(*args, **kwargs)
-        self.fields['status'].empty_label = ""
+        # self.fields['status'].empty_label = ""
         self.fields['type'].empty_label = ""
         self.fields['type'].size = "200"
         # self.fields['status'].widget = Select(attrs={'placeholder': "Stare", 'class': 'form-control'}),
