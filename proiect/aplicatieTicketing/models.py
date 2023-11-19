@@ -26,7 +26,7 @@ class Ticket(models.Model):
     type = models.ForeignKey(Type, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=40)
-    description = models.CharField(max_length=500)
+    description = models.CharField(max_length=200)
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True)

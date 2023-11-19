@@ -116,12 +116,23 @@ class CreateTicket(LoginRequiredMixin, CreateView):
         data = super(CreateTicket, self).get_form_kwargs()
         data.update({'pk': None})
         return data
+    #
+    # def get_form(self, request, obj=None, **kwargs):
+    #     form = super().get_form(request, obj, **kwargs)
+    #     is_superuser = request.user.is_superuser
+    #
+    #     if not is_superuser:
+    #         form.base_fields['username'].disabled = True
+    #
+    #     return form
 
     def form_valid(self, form):
         if form.is_valid():
             ticket_instance = form.save(commit=False)
             ticket_instance.user_id = self.request.user.id
-            ticket_instance.status = self.model.status.name
+            # if self.request.user.is_superuser is False:
+            #     ticket_instance.status_id = 10
+
             # ticket_instance.type = self.request.type.name
             ticket_instance.name = self.request.user.username
             ticket_instance.email = self.request.user.email

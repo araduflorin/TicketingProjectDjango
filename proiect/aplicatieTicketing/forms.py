@@ -31,14 +31,15 @@ class ContactClass(forms.ModelForm):
 class TicketClass(forms.ModelForm):
     class Meta:
         model = Ticket
-        fields = ['subject_ticket', 'type', 'description']
+        fields = ['subject_ticket', 'type', 'status', 'description']
 
-        labels = {"subject_ticket": "Subiect tichet", "type": "Tip tichet", "description":"Descriere"}
+        labels = {"subject_ticket": "Subiect tichet", "type": "Tip tichet", "status": "Stare tichet",
+                  "description": "Descriere"}
 
         widgets = {
             'subject_ticket': TextInput(attrs={'class': 'form-control', 'style': 'height:32px'}),
-            # 'status': Select(attrs={'class': 'form-control', 'style': 'height:32px'}),
             'type': Select(attrs={'class': 'form-control', 'style': 'height:32px'}),
+            'status': Select(attrs={'class': 'form-control', 'style': 'height:32px'}),
             'description': TextInput(attrs={'class': 'form-control', 'style': 'height:32px'}),
             # 'email': TextInput(attrs={'class': 'form-control', 'style': 'height:32px'}),
 
@@ -46,13 +47,21 @@ class TicketClass(forms.ModelForm):
 
     def __init__(self, pk, *args, **kwargs):
         super(TicketClass, self).__init__(*args, **kwargs)
-        # self.fields['status'].empty_label = ""
+
+        # superusers = User.objects.filter(is_superuser=True)
+        # if not superusers:
+        # self.fields['status'].choices = [("10", "Trimis")]
+        # self.fields['status'].initial = 'Trimis'
+        # self.fields['status'].widget = forms.HiddenInput()
+        # self.label_suffix[-2].widget = forms.HiddenInput()
+
         self.fields['type'].empty_label = ""
         self.fields['type'].size = "200"
         # self.fields['status'].widget = Select(attrs={'placeholder': "Stare", 'class': 'form-control'}),
         # self.fields['type'].widget = ChoiceField(choices={'placeholder': "Tip", 'class': 'form-control'}),
         # self.fields['status'].widget.attrs['placeholder'] = 'Stare'
         self.pk = pk
+
 
     def clean(self):
         name_value = self.cleaned_data.get('subject_ticket')
