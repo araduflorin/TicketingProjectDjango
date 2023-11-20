@@ -10,8 +10,26 @@
                 <div class="card-body">
                     <form method="POST">
                         {% csrf_token %}
-                         <label>Subiect tichet</label>
-                         <input type="text" name="email" class="form-control">
+                        <div class="col-4">
+                             <label>Subiect tichet</label>
+                             <input type="text" name="subject_ticket" class="form-control">
+                             <label>Tip tichet</label>
+                             <select name="type" class="form-control">
+                                 {% for type in types %}
+                                    <option value="{{ type.name }}">{{ type.name }}</option>
+                                 {% endfor %}
+                             </select>
+                            {% if action == 'Modifica' and request.user.is_superuser %}
+                                 <label>Stare tichet</label>
+                                 <select name="status" class="form-control">
+                                     {% for status in statuss %}
+                                        <option value="{{ status.name }}">{{ status.name }}</option>
+                                     {% endfor %}
+                                 </select>
+                            {% endif %}
+                             <label>Descriere tichet</label>
+                             <input type="text" name="description" class="form-control">
+                        </div>
 <!--                        {% for field in form %}-->
 <!--                                <div class="col-4">-->
 <!--                                    {{ field.label }} {{ field }} <br>{{ field.errors }}-->

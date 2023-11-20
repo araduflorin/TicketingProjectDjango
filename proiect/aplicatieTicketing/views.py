@@ -1,5 +1,3 @@
-
-
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -65,7 +63,8 @@ class InterPageTicket(LoginRequiredMixin, ListView):
             data['count'] = Ticket.objects.filter(user_id=self.request.user.id).count()
             data['count_final'] = Ticket.objects.filter(user_id=self.request.user.id, status=1).count()
             data['count_today'] = Ticket.objects.filter(user_id=self.request.user.id, created_at__day=now).count()
-            data['count_today_final'] = Ticket.objects.filter(user_id=self.request.user.id, created_at__day=now, status=1).count()
+            data['count_today_final'] = Ticket.objects.filter(user_id=self.request.user.id, created_at__day=now,
+                                                              status=1).count()
         return data
 
 
@@ -110,12 +109,15 @@ class CreateTicket(LoginRequiredMixin, CreateView):
     def get_context_data(self, *args, **kwargs):
         data = super(CreateTicket, self).get_context_data(*args, **kwargs)
         data['action'] = 'Adauga'
+        data['types'] = Type.objects.all()
+        data['statuss'] = Status.objects.all()
         return data
 
     def get_form_kwargs(self):
         data = super(CreateTicket, self).get_form_kwargs()
         data.update({'pk': None})
         return data
+
     #
     # def get_form(self, request, obj=None, **kwargs):
     #     form = super().get_form(request, obj, **kwargs)
@@ -151,6 +153,8 @@ class UpdateTicket(LoginRequiredMixin, UpdateView):
     def get_context_data(self, *args, **kwargs):
         data = super(UpdateTicket, self).get_context_data(*args, **kwargs)
         data['action'] = 'Modifica'
+        data['types'] = Type.objects.all()
+        data['statuss'] = Status.objects.all()
         return data
 
     def get_form_kwargs(self):
@@ -166,6 +170,7 @@ class ViewTicket(LoginRequiredMixin, ListView):
     model = Ticket
     form_class = TicketClass
     template_name = 'aplicatieTicketing/ticket_form_list.html'
+
     # context_object_name = 'ticket'
 
     def get_context_data(self, *args, **kwargs):
@@ -175,7 +180,6 @@ class ViewTicket(LoginRequiredMixin, ListView):
         else:
             data['all_ticket'] = Ticket.objects.filter(user_id=self.request.user.id)
         return data
-
 
 
 class ListTicket(LoginRequiredMixin, ListView):
@@ -244,6 +248,11 @@ class ViewTypeTicket(LoginRequiredMixin, ListView):
     form_class = TypeTicket
     template_name = 'aplicatieTicketing/type_list.html'
     context_object_name = 'type_list'
+
+    # def get_context_data(self, *args, **kwargs):
+    #     list_type = super(ViewTypeTicket, self).get_context_data(*args, **kwargs)
+    #     list_type['types'] = Type.objects.all()
+    #     return list_type
 
 
 class CreateStatusTicket(LoginRequiredMixin, CreateView):
