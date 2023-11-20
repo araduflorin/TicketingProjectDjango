@@ -39,7 +39,7 @@ class TicketClass(forms.ModelForm):
         widgets = {
             'subject_ticket': TextInput(attrs={'class': 'form-control', 'style': 'height:32px'}),
             'type': Select(attrs={'class': 'form-control', 'style': 'height:32px'}),
-            'status': Select(attrs={'class': 'form-control', 'style': 'height:32px'}),
+            'status': Select(attrs={'df-show':".name=='Modifica'",'class': 'form-control', 'style': 'height:32px'}),
             'description': TextInput(attrs={'class': 'form-control', 'style': 'height:32px'}),
             # 'email': TextInput(attrs={'class': 'form-control', 'style': 'height:32px'}),
 
