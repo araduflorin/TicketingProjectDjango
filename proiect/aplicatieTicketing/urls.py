@@ -14,6 +14,7 @@ urlpatterns = [
     path('contact_list/', views.ViewContact.as_view(), name='contact_list'),
     path('success/', views.success, name='success'),
     path('ticket/', views.CreateTicket.as_view(), name='ticket'),
+    path('ticket_admin/', views.CreateTicketAdmin.as_view(), name='ticket_admin'),
     path('ticket_list/', views.ViewTicket.as_view(), name='ticket_list'),
     path('ticket_view/', views.ListTicket.as_view(), name='ticket_view'),
     path('ticket_inter/', views.InterPageTicket.as_view(), name='ticket_inter'),

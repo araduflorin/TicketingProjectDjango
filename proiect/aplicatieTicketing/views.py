@@ -14,7 +14,7 @@ from datetime import date
 # import datetime
 from django.views.generic import CreateView, ListView, FormView, UpdateView
 
-from aplicatieTicketing.forms import ContactClass, TicketClass
+from aplicatieTicketing.forms import ContactClass, TicketClass, TicketClassAdmin
 from aplicatieTicketing.forms import TypeTicket, StatusTicket
 from aplicatieTicketing.models import Contact, Ticket
 from aplicatieTicketing.models import Type, Status
@@ -111,6 +111,7 @@ class CreateTicket(LoginRequiredMixin, CreateView):
         data['action'] = 'Adauga'
         data['types'] = Type.objects.all()
         data['statuss'] = Status.objects.all()
+
         return data
 
     def get_form_kwargs(self):
@@ -118,15 +119,44 @@ class CreateTicket(LoginRequiredMixin, CreateView):
         data.update({'pk': None})
         return data
 
-    #
-    # def get_form(self, request, obj=None, **kwargs):
-    #     form = super().get_form(request, obj, **kwargs)
-    #     is_superuser = request.user.is_superuser
-    #
-    #     if not is_superuser:
-    #         form.base_fields['username'].disabled = True
-    #
-    #     return form
+
+
+    def form_valid(self, form):
+        if form.is_valid():
+            ticket_instance = form.save(commit=False)
+            ticket_instance.user_id = self.request.user.id
+            # if self.request.user.is_superuser is False:
+            #     ticket_instance.status_id = 10
+
+            # ticket_instance.type = self.request.type.name
+            ticket_instance.name = self.request.user.username
+            ticket_instance.email = self.request.user.email
+            ticket_instance.save()
+        return super(CreateTicket, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('aplicatieTicketing:ticket_list')
+
+
+class CreateTicketAdmin(LoginRequiredMixin, CreateView):
+    model = Ticket
+    form_class = TicketClass
+    template_name = 'aplicatieTicketing/ticket_form_admin.html'
+
+    def get_context_data(self, *args, **kwargs):
+        data = super(CreateTicket, self).get_context_data(*args, **kwargs)
+        data['action'] = 'Adauga'
+        data['types'] = Type.objects.all()
+        data['statuss'] = Status.objects.all()
+
+        return data
+
+    def get_form_kwargs(self):
+        data = super(CreateTicket, self).get_form_kwargs()
+        data.update({'pk': None})
+        return data
+
+
 
     def form_valid(self, form):
         if form.is_valid():
