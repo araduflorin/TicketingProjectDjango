@@ -3,13 +3,9 @@
 {% block content %}
 <div class="container">
         <div class="col-md-12">
-
-
-            <a class="btn btn-primary" style="margin-top: 10px; " href="{% url 'aplicatieTicketing:ticket' %}">Adaugare tichet</a>
+              <a class="btn btn-primary" style="margin-top: 10px; " href="{% url 'aplicatieTicketing:ticket' %}">Adaugare tichet</a>
               <div class="p text-left bg-light" style="margin-top: 10px; ">
-
                 <div class="shadow p-4 mb-5 bg-body rounded" style="margin-top: 10px;">
-
                     <table class="table table-sm" style="margin-top: 10px;">
                         <thead class="thead-dark">
                         <tr>
@@ -48,10 +44,13 @@
                                     <td>{{ item.name }}</td>
                                     <td>{{ item.email }}</td>
                                     <td>
-                                        <a class="btn btn-success btn-sm" href="{% url 'aplicatieTicketing:modify_ticket' item.id %}">Editare</a>
+                                        {% if request.user.is_superuser %}
+                                            <a class="btn btn-success btn-sm" href="{% url 'aplicatieTicketing:modify_ticket_admin' item.id %}">Editare</a>
+                                         {% else %}
+                                            <a class="btn btn-success btn-sm" href="{% url 'aplicatieTicketing:modify_ticket' item.id %}">Editare</a>
+                                         {% endif %}
                                         <a class="btn btn-danger btn-sm" href="#">Stergere</a>
                                     </td>
-
                                 </tr>
                             {% endfor %}
                         </tbody>

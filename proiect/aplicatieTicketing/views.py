@@ -120,7 +120,6 @@ class CreateTicket(LoginRequiredMixin, CreateView):
         return data
 
 
-
     def form_valid(self, form):
         if form.is_valid():
             ticket_instance = form.save(commit=False)
@@ -128,44 +127,7 @@ class CreateTicket(LoginRequiredMixin, CreateView):
             # if self.request.user.is_superuser is False:
             #     ticket_instance.status_id = 10
 
-            # ticket_instance.type = self.request.type.name
-            ticket_instance.name = self.request.user.username
-            ticket_instance.email = self.request.user.email
-            ticket_instance.save()
-        return super(CreateTicket, self).form_valid(form)
-
-    def get_success_url(self):
-        return reverse('aplicatieTicketing:ticket_list')
-
-
-class CreateTicketAdmin(LoginRequiredMixin, CreateView):
-    model = Ticket
-    form_class = TicketClass
-    template_name = 'aplicatieTicketing/ticket_form_admin.html'
-
-    def get_context_data(self, *args, **kwargs):
-        data = super(CreateTicket, self).get_context_data(*args, **kwargs)
-        data['action'] = 'Adauga'
-        data['types'] = Type.objects.all()
-        data['statuss'] = Status.objects.all()
-
-        return data
-
-    def get_form_kwargs(self):
-        data = super(CreateTicket, self).get_form_kwargs()
-        data.update({'pk': None})
-        return data
-
-
-
-    def form_valid(self, form):
-        if form.is_valid():
-            ticket_instance = form.save(commit=False)
-            ticket_instance.user_id = self.request.user.id
-            # if self.request.user.is_superuser is False:
-            #     ticket_instance.status_id = 10
-
-            # ticket_instance.type = self.request.type.name
+            ticket_instance.status_id = 10
             ticket_instance.name = self.request.user.username
             ticket_instance.email = self.request.user.email
             ticket_instance.save()
@@ -189,6 +151,27 @@ class UpdateTicket(LoginRequiredMixin, UpdateView):
 
     def get_form_kwargs(self):
         data = super(UpdateTicket, self).get_form_kwargs()
+        data.update({'pk': self.kwargs['pk']})
+        return data
+
+    def get_success_url(self):
+        return reverse('aplicatieTicketing:ticket_list')
+
+
+class UpdateTicketAdmin(LoginRequiredMixin, UpdateView):
+    model = Ticket
+    form_class = TicketClassAdmin
+    template_name = 'aplicatieTicketing/ticket_form_admin.html'
+
+    def get_context_data(self, *args, **kwargs):
+        data = super(UpdateTicketAdmin, self).get_context_data(*args, **kwargs)
+        data['action'] = 'Modifica'
+        data['types'] = Type.objects.all()
+        data['statuss'] = Status.objects.all()
+        return data
+
+    def get_form_kwargs(self):
+        data = super(UpdateTicketAdmin, self).get_form_kwargs()
         data.update({'pk': self.kwargs['pk']})
         return data
 

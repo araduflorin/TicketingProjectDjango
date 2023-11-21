@@ -89,7 +89,7 @@ class TicketClassAdmin(forms.ModelForm):
         }
 
     def __init__(self, pk, *args, **kwargs):
-        super(TicketClass, self).__init__(*args, **kwargs)
+        super(TicketClassAdmin, self).__init__(*args, **kwargs)
 
         # superusers = User.objects.filter(is_superuser=True)
         # if not superusers:

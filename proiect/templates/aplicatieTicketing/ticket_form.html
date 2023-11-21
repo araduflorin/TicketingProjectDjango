@@ -10,46 +10,11 @@
                 <div class="card-body">
                     <form method="POST">
                         {% csrf_token %}
-<!--                        <div class="col-4">-->
-<!--                             <label>Subiect tichet</label>-->
-<!--                             <input type="text" name="subject_ticket" class="form-control">-->
-<!--                             <label>Tip tichet</label>-->
-<!--                             <select name="type" class="form-control">-->
-<!--                                 {% for type in types %}-->
-<!--                                    <option value="{{ type.name }}">{{ type.name }}</option>-->
-<!--                                 {% endfor %}-->
-<!--                             </select>-->
-<!--                            {% if action == 'Modifica' and request.user.is_superuser %}-->
-<!--                                 <label>Stare tichet</label>-->
-<!--                                 <select name="status" class="form-control">-->
-<!--                                     {% for status in statuss %}-->
-<!--                                        <option value="{{ status.name }}">{{ status.name }}</option>-->
-<!--                                     {% endfor %}-->
-<!--                                 </select>-->
-<!--                            {% endif %}-->
-<!--                             <label>Descriere tichet</label>-->
-<!--                             <input type="text" name="description" class="form-control">-->
-<!--                        </div>-->
                         {% for field in form %}
-                                <div class="col-4">
-                                    {{ field.label }} {{ field }} <br>{{ field.errors }}
-                                </div>
+                            <div class="col-4">
+                                {{ field.label }} {{ field }} <br>{{ field.errors }}
+                            </div>
                         {% endfor %}
-<!--                        {% if action == 'Adauga' %}-->
-<!--                            {% for field in form.visible_fields %}-->
-
-<!--                                <div class="col-4">-->
-<!--                                    {{ field.label }} {{ field }} <br>{{ field.errors }}-->
-<!--                                </div>-->
-<!--                            {% endfor %}-->
-<!--                        {% elif action == 'Modifica' %}-->
-<!--                             {% for field in form.hidden_fields %}-->
-<!--                                <div class="col-4">-->
-<!--                                   {{ field }} <br>{{ field.errors }}-->
-<!--                                </div>-->
-<!--                             {% endfor %}-->
-<!--                        {% endif %}-->
-
                         <br>
                         <div class="col-4">
                             <button type="submit" class="btn btn-success">Salveaza</button>
