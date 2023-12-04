@@ -27,6 +27,7 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('userprofile/', include('userprofile.urls')),
     path('admin/', admin.site.urls),
+    # path('api/',include('viessmann_api.urls')),
     
 
 ]

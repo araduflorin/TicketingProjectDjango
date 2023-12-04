@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'aplicatieTicketing',
     'phone_field',
     'userprofile',
+    'rest_framework',
 
 ]
 
